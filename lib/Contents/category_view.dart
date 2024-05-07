@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:auto_size_text/auto_size_text.dart';
@@ -26,7 +28,7 @@ class _categoryViewwState extends State<CategoryView> {
       primary: false,
       crossAxisCount: 5,
       childAspectRatio: 1.0,
-      mainAxisSpacing: 30.h,
+      mainAxisSpacing: 15.h,
 
       children: List.generate(widget.categoryList.length, (index) {
         Category category = widget.categoryList[index];
@@ -55,13 +57,13 @@ class _categoryViewwState extends State<CategoryView> {
               ),
 
             ),
-            SizedBox(height: 8.h),
+            SizedBox(height: 6.h),
             Container(
               child: Text(
                 category.categoryName,
                 style: TextStyle(
                     fontWeight: FontWeight.w500,
-                    fontSize: 11.sp,
+                    fontSize: min(11.h, 11.sp),
                     color: Colors.black
                 ),
                 textAlign: TextAlign.center,

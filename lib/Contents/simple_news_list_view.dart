@@ -1,6 +1,9 @@
+import 'dart:math';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../Datas/models.dart';
@@ -27,7 +30,7 @@ class _simpleNewsListViewState extends State<SimpleNewsListView> {
 
     return Container(
       width: 360.w,
-      height: 150.h * (widget.newsList.length >= 5 ? 5 : widget.newsList.length) ,
+      height: 138.h * (widget.newsList.length >= 5 ? 5 : widget.newsList.length) ,
       child: ListView.builder(
         shrinkWrap: true,
         physics: NeverScrollableScrollPhysics(),
@@ -45,7 +48,7 @@ class _simpleNewsListViewState extends State<SimpleNewsListView> {
               },
               child: Container(
                 width: 360.w,
-                height : 150.h,
+                height : 138.h,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.start,
@@ -54,8 +57,8 @@ class _simpleNewsListViewState extends State<SimpleNewsListView> {
                       color: Color(0xFFEDEDED),
                       height: 1.0,
                     ),
-                    Padding(
-                      padding: EdgeInsets.only(left: 20.w, right: 20.w, top : 16.h, bottom : 16.h),
+                    Container(
+                      padding: EdgeInsets.only(left: 20.w, right: 20.w, top : 15.h, bottom : 10.h),
                       child : Row(
                         children: [
                           ClipRRect(
@@ -77,8 +80,8 @@ class _simpleNewsListViewState extends State<SimpleNewsListView> {
                               Row(
                                 children: [
                                   Icon(
-                                    Icons.place_rounded,
-                                    size: 20.h,
+                                    Icons.storefront,
+                                    size: min(14.sp, 14.h),
                                     color: Color(0xFF5EF3D5),
                                   ),
                                   SizedBox(width: 4.03.w),
@@ -88,7 +91,7 @@ class _simpleNewsListViewState extends State<SimpleNewsListView> {
                                       widget.newsList[index].storeId,
                                       style : TextStyle (
                                         fontWeight: FontWeight.w500,
-                                        fontSize: 14.sp,
+                                        fontSize: min(14.h, 14.sp),
                                         color : Color(0xFF00D8BB),
                                       ),
                                       textAlign: TextAlign.left,
@@ -99,7 +102,7 @@ class _simpleNewsListViewState extends State<SimpleNewsListView> {
                               ),
 
                               // 소식 상세정보
-                              SizedBox(height: 8.h),
+                              SizedBox(height: 10.h),
 
                               Container(
                                 width: 196.w,
@@ -107,7 +110,7 @@ class _simpleNewsListViewState extends State<SimpleNewsListView> {
                                   widget.newsList[index].newsTitle,
                                   style : TextStyle (
                                     fontWeight: FontWeight.w800,
-                                    fontSize: 16.sp,
+                                    fontSize: min(16.h, 16.sp),
                                     color: Colors.black,
                                   ),
                                   textAlign: TextAlign.left,
@@ -117,7 +120,7 @@ class _simpleNewsListViewState extends State<SimpleNewsListView> {
                               ),
 
                               // 카테고리
-                              SizedBox(height: 8.h),
+                              SizedBox(height: 10.h),
 
                               Container(
                                 width: 100.w,
@@ -125,7 +128,7 @@ class _simpleNewsListViewState extends State<SimpleNewsListView> {
                                   '성북구 지역 · 뷰티',
                                   style : TextStyle (
                                     fontWeight: FontWeight.w500,
-                                    fontSize: 12.sp,
+                                    fontSize: min(12.h, 12.sp),
                                     color: Color(0xFF999999),
                                   ),
                                   textAlign: TextAlign.left,

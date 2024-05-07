@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:auto_size_text/auto_size_text.dart';
@@ -17,8 +19,8 @@ class LoginIdMember extends StatefulWidget {
 
 class _loginIdMemberState extends State<LoginIdMember> {
 
-  final TextEditingController userIdController = TextEditingController();
-  final TextEditingController passwordController = TextEditingController();
+  final TextEditingController _userIdController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
 
 
   @override
@@ -37,7 +39,7 @@ class _loginIdMemberState extends State<LoginIdMember> {
                 fontFamily: "Pretendard",
                 color: Colors.black,
                 fontWeight: FontWeight.w800,
-                fontSize: 14.sp,
+                fontSize: min(14.sp, 14.h),
               )
           ),
           content: Text(
@@ -46,7 +48,7 @@ class _loginIdMemberState extends State<LoginIdMember> {
                 fontFamily: "Pretendard",
                 color: Colors.black,
                 fontWeight: FontWeight.w500,
-                fontSize: 14.sp,
+                fontSize: min(14.sp, 14.h),
               )
           ),
           actions: <Widget>[
@@ -76,178 +78,232 @@ class _loginIdMemberState extends State<LoginIdMember> {
   @override
   Widget build(BuildContext context) {
 
-    return Scaffold(
-      body : SafeArea (
-        child: Container(
-          width: 360.w,
-          height: 685.h,
-          child: Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                // 동네곳곳 로고
-                Image.asset(
-                  'assets/images/icon/logo.png',
-                  width: 180.w,
-                  height: 40.h,
+    return SafeArea(
+        child: Scaffold(
+          appBar: PreferredSize(
+            preferredSize: Size(360.w, 50.h),
+            child: AppBar(
+              toolbarHeight: 50.h,
+              leading: IconButton(
+                icon: Icon(
+                  Icons.arrow_back_ios_new_outlined,
+                  size: min(16.h, 16.sp),
                 ),
-
-                SizedBox(height: 30.h),
-                // ID, PWD 입력
-                Container(
-                  width: 280.w,
-                  height: 38.h,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10.0),
-                    color: Color(0xFFF6F6F6), // 배경색 설정
+                onPressed: () {
+                  Navigator.pop(context); // 이전 화면으로 돌아가기
+                },
+              ),
+              flexibleSpace: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Container(
+                    color: Colors.white,
+                    alignment: Alignment.centerLeft,
+                    width: 360.w,
+                    height: 49.h,
+                    child: Row(
+                      children: [
+                        SizedBox(width: 50.w),
+                        Text(
+                          "로그인",
+                          style: TextStyle(
+                              fontWeight: FontWeight.w800,
+                              fontSize: min(16.h, 16.sp),
+                              fontFamily: "Pretendard"
+                          ),
+                          textAlign: TextAlign.left,
+                        ),
+                      ],
+                    ),
                   ),
-                  child: TextField(
-                    decoration: InputDecoration(
-                      hintText: '아이디',
-                      hintStyle: TextStyle(
+                  Container(
+                    height: 1.h, // 회색 줄의 높이
+                    color: Color(0xFFF5F5F5), // 회색 줄의 색상
+                  ),
+                ],
+              ),
+            ),
+          ),
+          body : Container(
+            width: 360.w,
+            height: 685.h,
+            child: Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  // 동네곳곳 로고
+                  Image.asset(
+                    'assets/images/icon/logo.png',
+                    width: 180.w,
+                    height: 40.h,
+                  ),
+
+                  SizedBox(height: 30.h),
+                  // ID, PWD 입력
+                  Container(
+                    width: 280.w,
+                    height: 38.h,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10.0),
+                      color: Color(0xFFF6F6F6), // 배경색 설정
+                    ),
+                    child: TextField(
+                      controller: _userIdController,
+                      style: TextStyle(
                         fontFamily: "Pretendard",
-                        fontSize: 14.sp,
+                        fontSize: min(14.sp, 14.h),
                       ),
-                      border: InputBorder.none,
-                      filled: true,
-                      fillColor: Colors.transparent,
-                    ),
-                  ),
-                ),
-
-                SizedBox(height: 15.h),
-                Container(
-                  width: 280.w,
-                  height: 38.h,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10.0),
-                    color: Color(0xFFF6F6F6), // 배경색 설정
-                  ),
-                  child: TextField(
-                    obscureText: true,
-                    decoration: InputDecoration(
-                      hintText: '비밀번호',
-                      hintStyle: TextStyle(
-                        fontFamily: "Pretendard",
-                        fontSize: 14.sp,
-                      ),
-                      border: InputBorder.none,
-                      filled: true,
-                      fillColor: Colors.transparent,
-                    ),
-                  ),
-                ),
-
-                SizedBox(height: 21.h),
-                // 로그인하기
-                Container(
-                  width: 280.w,
-                  height: 48.h,
-                  child: ElevatedButton(
-                    onPressed: () {
-                      print('로그인');
-                      // 로그인 처리
-
-                      _login();
-                    },
-                    style: ElevatedButton.styleFrom(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10.0),
-                      ),
-                      backgroundColor: Color(0xFF5EF3D5),
-                      minimumSize: Size(280.w, 40.h),
-                    ),
-                    child : Container(
-                      width : 280.w,
-                      child: Text(
-                        '로그인하기',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
+                      decoration: InputDecoration(
+                        hintText: '아이디',
+                        hintStyle: TextStyle(
                           fontFamily: "Pretendard",
-                          color: Colors.black,
-                          fontWeight: FontWeight.w700,
-                          fontSize: 16.sp,
+                          fontSize: min(14.sp, 14.h),
+                        ),
+                        border: InputBorder.none,
+                        filled: true,
+                        fillColor: Colors.transparent,
+                      ),
+                    ),
+                  ),
+
+                  SizedBox(height: 15.h),
+                  Container(
+                    width: 280.w,
+                    height: 38.h,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10.0),
+                      color: Color(0xFFF6F6F6), // 배경색 설정
+                    ),
+                    child: TextField(
+                      obscureText: true,
+                      controller: _passwordController,
+                      style: TextStyle(
+                        fontFamily: "Pretendard",
+                        fontSize: min(14.sp, 14.h),
+                      ),
+                      decoration: InputDecoration(
+                        hintText: '비밀번호',
+                        hintStyle: TextStyle(
+                          fontFamily: "Pretendard",
+                          fontSize: min(14.sp, 14.h),
+                        ),
+                        border: InputBorder.none,
+                        filled: true,
+                        fillColor: Colors.transparent,
+                      ),
+                    ),
+                  ),
+
+                  SizedBox(height: 21.h),
+                  // 로그인하기
+                  Container(
+                    width: 280.w,
+                    height: 48.h,
+                    child: ElevatedButton(
+                      onPressed: () {
+                        print('로그인');
+                        // 로그인 처리
+
+                        _login();
+                      },
+                      style: ElevatedButton.styleFrom(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10.0),
+                        ),
+                        backgroundColor: Color(0xFF5EF3D5),
+                        minimumSize: Size(280.w, 40.h),
+                      ),
+                      child : Container(
+                        width : 280.w,
+                        child: Text(
+                          '로그인',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontFamily: "Pretendard",
+                            color: Colors.black,
+                            fontWeight: FontWeight.w800,
+                            fontSize: min(16.sp, 16.h),
+                          ),
                         ),
                       ),
                     ),
                   ),
-                ),
 
-                SizedBox(height: 30.h),
-                // 회원가입
+                  SizedBox(height: 30.h),
+                  // 회원가입
 
-                Container(
-                  width: 200.w,
-                  height: 44.h,
-                  child :Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
+                  Container(
+                    width: 200.w,
+                    height: 44.h,
+                    child :Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
 
-                      //회원가입
-                      Container(
-                        width: 60.w,
-                        height: 20.h,
-                        child: GestureDetector(
-                          onTap: () {
-                            print('회원가입');
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(builder: (context) => JoinUserInfo()),
-                            );
-                          },
-                          child: Text(
-                            '회원가입',
-                            style: TextStyle(
-                              fontFamily: "Pretendard",
-                              decoration: TextDecoration.underline,
-                              decorationColor: Colors.blue,
-                              color: Colors.blue,
-                              fontSize: 16.sp,
+                        //회원가입
+                        Container(
+                          width: 60.w,
+                          height: 20.h,
+                          child: GestureDetector(
+                            onTap: () {
+                              print('회원가입');
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (context) => JoinUserInfo()),
+                              );
+                            },
+                            child: Text(
+                              '회원가입',
+                              style: TextStyle(
+                                fontFamily: "Pretendard",
+                                decoration: TextDecoration.underline,
+                                decorationColor: Colors.blue,
+                                color: Colors.blue,
+                                fontSize: min(16.sp, 16.h),
+                              ),
+                              textAlign: TextAlign.center,
                             ),
-                            textAlign: TextAlign.center,
                           ),
                         ),
-                      ),
 
-                      Container(
-                        width: 1,
-                        height: 44.h,
-                        color: Color(0xFF999999),
-                      ),
+                        Container(
+                          width: 1,
+                          height: 44.h,
+                          color: Color(0xFF999999),
+                        ),
 
-                      //비밀번호찾기
-                      Container(
-                        width: 60.w,
-                        height: 20.h,
-                        child: GestureDetector(
-                          onTap: () {
-                            print('비밀번호찾기');
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(builder: (context) => FindPassword()),
-                            );
-                          },
-                          child: Text(
-                            '비밀번호 찾기',
-                            style: TextStyle(
-                              fontFamily: "Pretendard",
-                              decoration: TextDecoration.underline,
-                              decorationColor: Colors.blue,
-                              color: Colors.blue,
-                              fontSize: 16.sp,
+                        //비밀번호찾기
+                        Container(
+                          width: 60.w,
+                          height: 20.h,
+                          child: GestureDetector(
+                            onTap: () {
+                              print('비밀번호찾기');
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (context) => FindPassword()),
+                              );
+                            },
+                            child: Text(
+                              '비밀번호 찾기',
+                              style: TextStyle(
+                                fontFamily: "Pretendard",
+                                decoration: TextDecoration.underline,
+                                decorationColor: Colors.blue,
+                                color: Colors.blue,
+                                fontSize: min(16.sp, 16.h),
+                              ),
+                              textAlign: TextAlign.center,
                             ),
-                            textAlign: TextAlign.center,
                           ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),
-      ),
     );
   }
 }

@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -77,43 +79,8 @@ class _storyPageStatus extends State<StoryPage> {
 
     double viewHeight = getHeight();
 
-    return Scaffold(
-      appBar: AppBar(
-        bottomOpacity : 0.0,
-        backgroundColor: Colors.white,
-        toolbarHeight: 50.h,
-        flexibleSpace : Container(
-          color: Colors.white,
-          alignment: Alignment.centerLeft,
-          width: 360.w,
-          height: 50.h,
-          child: Row(
-            children: [
-              SizedBox(width: 21.w),
-              Container(
-                width: 16.w,
-                height: 20.h,
-                child: Image.asset(
-                  'assets/images/icon/place.png',
-                  fit: BoxFit.fitHeight,
-                ),
-              ),
-              SizedBox(width: 8.w),
-              Text(
-                  '동네곳곳 이야기',
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontWeight: FontWeight.w800,
-                    fontSize: 16.0.sp,
-                    fontFamily: "Pretendard",
-                  ),
-                  maxLines: 1,
-              ),
-            ],
-          ),
-        ),
-      ),
-      body : Column(
+    return Container(
+      child : Column(
         children: [
           Container(
             width: 360.w,
@@ -137,13 +104,13 @@ class _storyPageStatus extends State<StoryPage> {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           Container(
-                            width: 80.w, // Adjust width as needed
-                            height: 40.w, // Set height equal to width for circular shape
+                            width: min(50.w, 50.h),
+                            height: min(50.w, 50.h),
                             decoration: BoxDecoration(
                               shape: BoxShape.rectangle,
                               image: DecorationImage(
                                 image: AssetImage('assets/images/icon/youtube.png'),
-                                fit: BoxFit.scaleDown,
+                                fit: BoxFit.fill,
                               ),
                             ),
                           ),
@@ -153,7 +120,7 @@ class _storyPageStatus extends State<StoryPage> {
                             'Youtube',
                             textAlign: TextAlign.center,
                             style: TextStyle(
-                              fontSize: 12.sp,
+                              fontSize: min(12.sp, 12.h),
                               fontWeight: FontWeight.bold,
                             ),
                             maxLines: 1,
@@ -163,7 +130,7 @@ class _storyPageStatus extends State<StoryPage> {
                     ),
                   ),
                 ),
-                SizedBox(width: 20.w), // 각 아이템 사이의 간격 조절
+                SizedBox(width: 20.w),
                 // 두 번째 아이템
                 Container(
                   width: 140.w,
@@ -180,13 +147,13 @@ class _storyPageStatus extends State<StoryPage> {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           Container(
-                            width: 80.w, // Adjust width as needed
-                            height: 40.w,// Set height equal to width for circular shape
+                            width: min(50.w, 50.h),
+                            height: min(50.w, 50.h),
                             decoration: BoxDecoration(
                               shape: BoxShape.rectangle,
                               image: DecorationImage(
                                 image: AssetImage('assets/images/icon/blog.png'),
-                                fit: BoxFit.scaleDown,
+                                fit: BoxFit.fill,
                               ),
                             ),
                           ),
@@ -196,7 +163,7 @@ class _storyPageStatus extends State<StoryPage> {
                             'Blog',
                             textAlign: TextAlign.center,
                             style: TextStyle(
-                              fontSize: 12.sp,
+                              fontSize: min(12.sp, 12.h),
                               fontWeight: FontWeight.bold,
                             ),
                             maxLines: 1,
@@ -211,149 +178,118 @@ class _storyPageStatus extends State<StoryPage> {
           ),
 
         storyList.isEmpty?
-        Center(
-          child: Text(
-              '검색 결과가 없습니다.',
+        Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            SizedBox(height : 180.h),
+            Image.asset(
+              'assets/images/icon/noresult.png', // 이미지 경로
+              width: 80.w,
+              height: 80.h,
+              color: Colors.grey,// 이미지 색상 변경 (예시)
+            ),
+            SizedBox(height: 10.h),
+            Text(
+              '빠르게 추가하겠습니다.',
               style: TextStyle(
-                  fontFamily: "Pretendard",
-                  fontSize: 16.sp,
-                  fontWeight: FontWeight.w500,
-                  color: Colors.grey
+                fontFamily: "Pretendard",
+                fontSize: min(14.h, 14.sp),
+                fontWeight: FontWeight.w500,
+                color: Colors.grey,
               ),
             ),
+          ],
         ) :
         Flexible(
-          child: SingleChildScrollView(
-            reverse: false,
-            child : storyList.isNotEmpty ?
-            Container(
-              padding: EdgeInsets.only(
-                  left: 10.w, right: 10.w, top: 10.h, bottom: 10.h),
-              width: 360.w,
-              height: viewHeight.h, // Adjusted height calculation
-              child: GridView.builder(
-                physics: NeverScrollableScrollPhysics(),
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  childAspectRatio: 0.9,
-                ),
-                itemCount: storyList.length, // Set itemCount
-                itemBuilder: (context, index) {
-                  if (index < storyList.length) {
-                    Story story = storyList[index];
-
-                    return GestureDetector(
-                        onTap: () {
-                          // Handle tap on the story
-                          print('click story' + storyList[index].storyId);
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) =>
-                                  StoryDetailPage(
-                                      selectedStory: storyList[index]),
-                            ),
-                          );
-                        },
-                        child: Container(
-                          padding: EdgeInsets.only(left: 10.w, right: 10.w, top: 15.h, bottom: 15.h),
-                          child: Container(
-                            width: 140.w,
-                            height: 210.h,
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(8.0),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.grey.withOpacity(0.5),
-                                  spreadRadius: 0,
-                                  blurRadius: 3,
-                                  offset: Offset(0, 3), // changes position of shadow
-                                ),
-                              ],
-                            ),
-                            child: Stack(
-                              alignment: Alignment.topCenter,
-                              children: [
-                                // Display the image with curved corners
-                                Positioned(
-                                  top: 0,
-                                  left: 0,
-                                  right: 0,
-                                  child: ClipRRect(
-                                    borderRadius: BorderRadius.only(
-                                        topLeft: Radius.circular(8),
-                                        topRight: Radius.circular(8),
-                                        bottomLeft: Radius.zero,
-                                        bottomRight: Radius.zero),
-                                    child: Image.network(
-                                      //story.imageUrl,
-                                      'https://cdn.pixabay.com/photo/2013/08/10/18/13/candies-171342_1280.jpg',
-                                      width: 140.w,
-                                      height: 80.h, // Adjust as needed
-                                      fit: BoxFit.cover,
-                                    ),
-                                  ),
-                                ),
-                                Positioned(
-                                  top: 90.h,
-                                  left: 0,
-                                  right: 0,
-                                  child: Container(
-                                    padding: EdgeInsets.symmetric(horizontal: 10.w),
-                                    child: Row(
-                                      children: [
-                                        // Display the icon
-                                        Icon(
-                                          Icons.place_rounded,
-                                          size: 15.sp,
-                                          color: Color(0xFF5EF3D5),
-                                        ),
-                                        SizedBox(width: 4.w),
-                                        // Display the company name
-                                        Text(
-                                          'Company Name',
-                                          style: TextStyle(
-                                              color: Colors.black,
-                                              fontSize: 12.sp
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                                Positioned(
-                                  top: 118.h,
-                                  left: 0,
-                                  right: 0,
-                                  child: Container(
-                                    padding: EdgeInsets.symmetric(horizontal: 10.w),
-                                    child: Text(
-                                      story.storyTitle,
-                                      maxLines: 2,
-                                      overflow: TextOverflow.ellipsis,
-                                      textAlign: TextAlign.left,
-                                      style: TextStyle(
-                                        fontSize: 14.sp,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        )
-                    );
-                  } else {
-                    return SizedBox();
-                  }
-                },
-              ),
-            ) : SizedBox(),
+          child: ListView.builder(
+            padding: EdgeInsets.all(30.0),
+            itemCount: storyList.length,
+            itemBuilder: (context, index) {
+              return storyItem(storyList[index]);
+              },
           ),
         ),
         ],
+      ),
+    );
+  }
+
+  Widget storyItem(Story story) {
+    return InkWell(
+      hoverColor: Colors.transparent,
+      focusColor: Colors.transparent,
+      highlightColor: Colors.transparent,
+      onTap: () {
+        // 클릭 시 StoryDetailPage로 이동
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => StoryDetailPage(selectedStory: story)),
+        );
+      },
+      child: Container(
+        width: 200.w, // 적절한 크기 지정
+        height: 250.h,
+        margin: EdgeInsets.all(20), // 각 항목의 마진
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10), // 테두리 곡선
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.3), // 그림자 색상 및 투명도
+              spreadRadius: 2,
+              blurRadius: 8,
+              offset: Offset(0, 3), // 그림자 위치 조정
+            ),
+          ],
+          image: DecorationImage(
+            image: NetworkImage("https://res.heraldm.com/content/image/2023/02/24/20230224000260_0.jpg"), // 이미지 URL
+            fit: BoxFit.cover, // 이미지 채우기 방식
+          ),
+        ),
+        child: Stack(
+          children: [
+            Positioned(
+              bottom: 60,
+              left: 10,
+              child: Container(
+                padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                decoration: BoxDecoration(
+                  color: Colors.black.withOpacity(0.5), // 텍스트 배경색 투명도
+                  borderRadius: BorderRadius.circular(4), // 텍스트 배경 곡선
+                ),
+                child: Text(
+                  "조조칼국수",
+                  style: TextStyle(
+                    fontSize: min(14.sp, 14.h),
+                    color: Colors.white, // 텍스트 색상
+                    fontWeight: FontWeight.w800,
+                    fontFamily: "Pretendard",
+                  ),
+                ),
+              ),
+            ),
+            Positioned(
+              bottom: 10,
+              left: 10,
+              child: Container(
+                padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                decoration: BoxDecoration(
+                  color: Colors.black.withOpacity(0.5), // 텍스트 배경색 투명도
+                  borderRadius: BorderRadius.circular(4), // 텍스트 배경 곡선
+                ),
+                child: Text(
+                  //"${story.title} - ${story.storeName}",
+                  "30년 전통을 이어온 비결",
+                  style: TextStyle(
+                    fontSize: min(20.sp, 20.h),
+                    color: Colors.white, // 텍스트 색상
+                    fontWeight: FontWeight.w800,
+                    fontFamily: "Pretendard",
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
       )
     );
   }

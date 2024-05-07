@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:card_swiper/card_swiper.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -54,63 +56,52 @@ class _storeDetailPageState extends State<StoreDetailPage> with SingleTickerProv
 
     final tabMenu = ['상점정보', '상점소식'];
 
-    return Scaffold(
-      appBar: AppBar(
-        toolbarHeight: 52.h,
-        bottomOpacity : 0.0,
-        backgroundColor: Colors.white,
-        flexibleSpace: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Container(
-              color: Colors.white,
-              alignment: Alignment.centerLeft,
-              width: 360.w,
-              height: 50.h,
-              child:  Stack(
-                children: [
-                  Row(
-                    children: [
-                      SizedBox(width: 50.w),
-                      Text(
-                        widget.selectedStore.storeId,
-                        style: TextStyle(
-                            fontWeight: FontWeight.w800,
-                            fontSize: 16.0.sp,
-                            fontFamily: "Pretendard"
-                        ),
-                        textAlign: TextAlign.left,
+    return SafeArea(child: Scaffold(
+      appBar: PreferredSize(
+        preferredSize: Size(360.w, 50.h),
+        child: AppBar(
+          toolbarHeight: 50.h,
+          backgroundColor: Colors.red,
+          leading: IconButton(
+            icon: Icon(
+              Icons.arrow_back_ios_new_outlined,
+              size: min(16.h, 16.sp),
+            ),
+            onPressed: () {
+              Navigator.pop(context); // 이전 화면으로 돌아가기
+            },
+          ),
+          flexibleSpace: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Container(
+                color: Colors.white,
+                alignment: Alignment.centerLeft,
+                width: 360.w,
+                height: 49.h,
+                child: Row(
+                  children: [
+                    SizedBox(width: 50.w),
+                    Text(
+                      widget.selectedStore.storeId,
+                      style: TextStyle(
+                          fontWeight: FontWeight.w800,
+                          fontSize: min(16.h, 16.sp),
+                          fontFamily: "Pretendard"
                       ),
-                    ],
-                  ),
-                  Positioned(
-                    right: 20.w,
-                    child: GestureDetector(
-                      onTap: () {
-                        print('공유하기');
-                      },
-                      child: Container(
-                        width: 20.w,
-                        height: 23.h,
-                        child: Icon(
-                          Icons.share,
-                          size: 25.sp,
-                        ),
-                      ),
+                      textAlign: TextAlign.left,
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
-            ),
-            Container(
-              color: Color(0xFFF5F5F5), // 회색 줄의 높이
-              height: 1, // 회색 줄의 색상
-            ),
-          ],
+              Container(
+                height: 1.h, // 회색 줄의 높이
+                color: Color(0xFFF5F5F5), // 회색 줄의 색상
+              ),
+            ],
+          ),
         ),
       ),
-
-
       body: FutureBuilder(
         future: Future.wait([_newsFuture, _couponFuture]),
         builder: (context, AsyncSnapshot<List<dynamic>> snapshot) {
@@ -148,8 +139,9 @@ class _storeDetailPageState extends State<StoreDetailPage> with SingleTickerProv
 
                   Container(
                     width:  360.w,
-                    height: 180.h,
-                    padding: EdgeInsets.only(left: 25.w, right: 25.w, top : 30.h, bottom: 15.h),
+                    height: 220.h,
+                    color: Colors.yellow,
+                    padding: EdgeInsets.only(left: 25.w, right: 25.w, top : 30.h,),
                     child: Column(
                       children: [
                         // 상점명 + 지역
@@ -163,7 +155,7 @@ class _storeDetailPageState extends State<StoreDetailPage> with SingleTickerProv
                                 widget.selectedStore.storeId,
                                 style: TextStyle(
                                     fontFamily: "Pretendard",
-                                    fontSize: 20.sp,
+                                    fontSize: min(20.sp, 20.h),
                                     fontWeight: FontWeight.w800,
                                     color: Colors.black
                                 ),
@@ -178,7 +170,7 @@ class _storeDetailPageState extends State<StoreDetailPage> with SingleTickerProv
                                 '성북구 지역 · 고기요리',
                                 style: TextStyle(
                                     fontFamily: "Pretendard",
-                                    fontSize: 14.sp,
+                                    fontSize: min(14.sp, 14.h),
                                     fontWeight: FontWeight.w500,
                                     color: Color(0xFF999999)
                                 ),
@@ -201,7 +193,7 @@ class _storeDetailPageState extends State<StoreDetailPage> with SingleTickerProv
                               child: Icon(
                                 Icons.favorite,
                                 color: Color(0xFF5EF3D5),
-                                size: 15.sp,
+                                size: min(15.sp, 15.h),
                               ),
                               alignment: Alignment.center,
                             ),
@@ -209,10 +201,10 @@ class _storeDetailPageState extends State<StoreDetailPage> with SingleTickerProv
                             Container(
                               width: 150.w,
                               child: Text(
-                                '300명이 Pick',
+                                '300명 Pick',
                                 style: TextStyle(
                                     fontFamily: "Pretendard",
-                                    fontSize: 12.sp,
+                                    fontSize: min(12.sp, 12.h),
                                     fontWeight: FontWeight.w500,
                                     color: Color(0xFF999999)
                                 ),
@@ -223,13 +215,31 @@ class _storeDetailPageState extends State<StoreDetailPage> with SingleTickerProv
                             ),
                           ],
                         ),
-                        
-                        SizedBox(height: 22.h),
+
+                        SizedBox(width: 6.w),
+                        Container(
+                          width: 300.w,
+                          height: 70.h,
+                          child: Text(
+                            '진심을 다해 선보이는 스시 오마카세 \n 콜키지는 에약 시 요청사항에 적어주시면 감사하겠습니다.',
+                            style: TextStyle(
+                                fontFamily: "Pretendard",
+                                fontSize: min(14.sp, 14.h),
+                                fontWeight: FontWeight.w500,
+                                color: Colors.black
+                            ),
+                            textAlign: TextAlign.left,
+                            maxLines: 3,
+                          ),
+                          alignment: Alignment.centerLeft,
+                        ),
+
+                        SizedBox(height: 15.h),
                         // 좋아요, 홈페이지, 연락
                         Container(
                           padding: EdgeInsets.only(left: 10.w, right: 10.w),
                           width: 310.w,
-                          height: 48.h,
+                          height: 35.h,
                           child: Row(
                             crossAxisAlignment: CrossAxisAlignment.center,
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -243,15 +253,15 @@ class _storeDetailPageState extends State<StoreDetailPage> with SingleTickerProv
                                   children: [
                                     Icon(
                                       Icons.favorite,
-                                      size: 20.sp,
+                                      size: min(20.sp, 20.h),
                                       color: Color(0xFF999999),
                                     ),
-                                    SizedBox(width: 7.8.w),
+                                    SizedBox(width: 3.w),
                                     Text(
-                                      '나의 Pick',
+                                      'Pick',
                                       style: TextStyle(
                                           fontFamily: "Pretendard",
-                                          fontSize: 14.sp,
+                                          fontSize: min(14.sp, 14.h),
                                           fontWeight: FontWeight.w500,
                                           color: Color(0xFF999999)
                                       ),
@@ -263,7 +273,7 @@ class _storeDetailPageState extends State<StoreDetailPage> with SingleTickerProv
                               ),
                               Container(
                                 width: 0.5,
-                                height: 48.h,
+                                height: 35.h,
                                 color: Color(0xFF999999),
                               ),
                               GestureDetector(
@@ -275,15 +285,15 @@ class _storeDetailPageState extends State<StoreDetailPage> with SingleTickerProv
                                   children: [
                                     Icon(
                                       Icons.home_outlined,
-                                      size: 20.sp,
+                                      size: min(20.sp, 20.h),
                                       color: Color(0xFF999999),
                                     ),
-                                    SizedBox(width: 7.8.w),
+                                    SizedBox(width: 3.w),
                                     Text(
                                       '홈페이지',
                                       style: TextStyle(
                                           fontFamily: "Pretendard",
-                                          fontSize: 14.sp,
+                                          fontSize: min(14.sp, 14.h),
                                           fontWeight: FontWeight.w500,
                                           color: Color(0xFF999999)
                                       ),
@@ -307,15 +317,15 @@ class _storeDetailPageState extends State<StoreDetailPage> with SingleTickerProv
                                   children: [
                                     Icon(
                                       Icons.call,
-                                      size: 20.sp,
+                                      size: min(20.sp, 20.h),
                                       color: Color(0xFF999999),
                                     ),
-                                    SizedBox(width: 7.8.w),
+                                    SizedBox(width: 3.w),
                                     Text(
-                                      '전화연결',
+                                      '전화',
                                       style: TextStyle(
                                           fontFamily: "Pretendard",
-                                          fontSize: 14.sp,
+                                          fontSize: min(14.sp, 14.h),
                                           fontWeight: FontWeight.w500,
                                           color: Color(0xFF999999)
                                       ),
@@ -355,11 +365,11 @@ class _storeDetailPageState extends State<StoreDetailPage> with SingleTickerProv
                           Tab(
                             height: 40.h,
                             child:Text(
-                              '상정정보',
+                              '상점정보',
                               style: TextStyle(
                                   fontFamily: "Pretendard",
-                                  fontSize: 14.sp,
-                                  fontWeight: FontWeight.w500,
+                                  fontSize: min(14.sp, 14.h),
+                                  fontWeight: FontWeight.w800,
                               ),
                             ),
                           ),
@@ -369,8 +379,8 @@ class _storeDetailPageState extends State<StoreDetailPage> with SingleTickerProv
                               '행사소식',
                               style: TextStyle(
                                 fontFamily: "Pretendard",
-                                fontSize: 14.sp,
-                                fontWeight: FontWeight.w500,
+                                fontSize: min(14.sp, 14.h),
+                                fontWeight: FontWeight.w800,
                               ),
                             ),
                           ),
@@ -392,6 +402,6 @@ class _storeDetailPageState extends State<StoreDetailPage> with SingleTickerProv
           }
         },
       ),
-    );
+    ),);
   }
 }

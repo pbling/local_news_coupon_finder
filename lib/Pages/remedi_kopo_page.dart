@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:remedi_kopo/src/kopo_model.dart';
 import 'package:webview_flutter/webview_flutter.dart';
@@ -35,63 +36,77 @@ class _remidiKopoPage extends State<RemidiKopoPage> {
   WebViewController? get controller => _controller;
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        toolbarHeight: 52.h,
-        bottomOpacity : 0.0,
-        backgroundColor: Colors.white,
-        flexibleSpace: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Container(
-              color: Colors.white,
-              alignment: Alignment.centerLeft,
-              width: 300.w,
-              height: 50.h,
-              child: Row(
+    return SafeArea(
+        child: Scaffold(
+          appBar: PreferredSize(
+            preferredSize: Size(360.w, 50.h),
+            child: AppBar(
+              toolbarHeight: 50.h,
+              backgroundColor: Colors.red,
+              leading: IconButton(
+                icon: Icon(
+                  Icons.arrow_back_ios_new_outlined,
+                  size: min(16.h, 16.sp),
+                ),
+                onPressed: () {
+                  Navigator.pop(context); // 이전 화면으로 돌아가기
+                },
+              ),
+              flexibleSpace: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  SizedBox(width: 25.w),
-                  Text(
-                    '주소검색',
-                    style: TextStyle(
-                        fontWeight: FontWeight.w800,
-                        fontSize: 16.0.sp,
-                        fontFamily: "Pretendard"
+                  Container(
+                    color: Colors.white,
+                    alignment: Alignment.centerLeft,
+                    width: 360.w,
+                    height: 49.h,
+                    child: Row(
+                      children: [
+                        SizedBox(width: 50.w),
+                        Text(
+                          "주소검색",
+                          style: TextStyle(
+                              fontWeight: FontWeight.w800,
+                              fontSize: min(16.h, 16.sp),
+                              fontFamily: "Pretendard"
+                          ),
+                          textAlign: TextAlign.left,
+                        ),
+                      ],
                     ),
-                    textAlign: TextAlign.left,
+                  ),
+                  Container(
+                    height: 1.h, // 회색 줄의 높이
+                    color: Color(0xFFF5F5F5), // 회색 줄의 색상
                   ),
                 ],
               ),
             ),
-            Container(
-              height: 1, // 회색 줄의 높이
-              color: Color(0xFFF5F5F5), // 회색 줄의 색상
-            ),
-          ],
-        ),
-      ),
-      body: WebView(
-          initialUrl: 'https://studio-b-co-kr.github.io/kopo/assets/daum.html',
-          javascriptMode: JavascriptMode.unrestricted,
-          javascriptChannels: Set.from([
-            JavascriptChannel(
-                name: 'onComplete',
-                onMessageReceived: (JavascriptMessage message) {
-                  //This is where you receive message from
-                  //javascript code and handle in Flutter/Dart
-                  //like here, the message is just being printed
-                  //in Run/LogCat window of android studio
-                  KopoModel result = KopoModel.fromJson(jsonDecode(message.message));
+          ),
+          body: WebView(
+            initialUrl: 'https://studio-b-co-kr.github.io/kopo/assets/daum.html',
+            javascriptMode: JavascriptMode.unrestricted,
+            javascriptChannels: Set.from([
+              JavascriptChannel(
+                  name: 'onComplete',
+                  onMessageReceived: (JavascriptMessage message) {
+                    //This is where you receive message from
+                    //javascript code and handle in Flutter/Dart
+                    //like here, the message is just being printed
+                    //in Run/LogCat window of android studio
+                    KopoModel result = KopoModel.fromJson(jsonDecode(message.message));
 
-                  if (widget.callback != null) {
-                    widget.callback!(result);
-                  }
-                  Navigator.pop(context, result);
-                }),
-          ]),
-          onWebViewCreated: (WebViewController webViewController) async {
-            _controller = webViewController;
-          }),
+                    if (widget.callback != null) {
+                      widget.callback!(result);
+                    }
+                    Navigator.pop(context, result);
+                  }),
+            ]),
+            onWebViewCreated: (WebViewController webViewController) async {
+              _controller = webViewController;
+            }
+            ),
+        ),
     );
   }
 }

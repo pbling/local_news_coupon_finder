@@ -1,4 +1,5 @@
 import 'dart:io' show Platform;
+import 'dart:math';
 import 'package:flutter/foundation.dart' show kIsWeb;
 
 import 'package:flutter/cupertino.dart';
@@ -33,7 +34,8 @@ class _selectLoginOptionState extends State<SelectLoginOption> {
       onTap: onTap,
       child: ClipOval(
         child: Container(
-          width: 40.w, // 버튼의 높이
+          width: min(40.w, 40.h),
+          height: min(40.w, 40.h),// 버튼의 높이
           child: Image.asset(
             imagePath,
             fit: BoxFit.fill,
@@ -42,9 +44,9 @@ class _selectLoginOptionState extends State<SelectLoginOption> {
       ),
     );
   }
+
   // iOS에 대한 버튼 UI 반환
   Widget _buildIOSButtons() {
-
     return Container(
       width: 180.w,
       height: 40.h,
@@ -114,64 +116,64 @@ class _selectLoginOptionState extends State<SelectLoginOption> {
   Widget build(BuildContext context) {
 
     return Scaffold(
-      body : SafeArea (
-        child: Container(
-          width: 360.w,
-          height: 685.h,
-          child: Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                // 동네곳곳 로고
-                Image.asset(
-                  'assets/images/icon/logo.png',
-                  width: 180.w,
-                  height: 40.h,
-                ),
+      body : Container(
+        color: Colors.white,
+        width: 360.w,
+        height: 685.h,
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              // 동네곳곳 로고
+              Image.asset(
+                'assets/images/icon/logo.png',
+                width: 180.w,
+                height: 40.h,
+              ),
 
-                SizedBox(height: 30.h),
+              SizedBox(height: 30.h),
 
-                // SNS 간편로그인
-                Container(
-                  width: 280.w,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Container(
-                        width: 70.w,
-                        height: 1.0,
-                        color: Color(0xFF999999),
-                      ),
-                      SizedBox(width: 10.w),
-                      Container(
-                        width: 120.w,
-                        child: Text(
-                          'SNS 간편 로그인',
-                          style: TextStyle(
-                            fontFamily: "Pretendard",
-                            color: Color(0xFF999999),
-                            fontSize: 14.sp,
-                            fontWeight: FontWeight.w500,
-                          ),
-                          textAlign: TextAlign.center,
+              // SNS 간편로그인
+              Container(
+                width: 280.w,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Container(
+                      width: 70.w,
+                      height: 1.0,
+                      color: Color(0xFF999999),
+                    ),
+                    SizedBox(width: 10.w),
+                    Container(
+                      width: 120.w,
+                      child: Text(
+                        'SNS 간편 로그인',
+                        style: TextStyle(
+                          fontFamily: "Pretendard",
+                          color: Color(0xFF999999),
+                          fontSize: min(14.sp, 14.h),
+                          fontWeight: FontWeight.w500,
                         ),
+                        textAlign: TextAlign.center,
                       ),
-                      SizedBox(width: 10.w),
-                      Container(
-                        width: 70.w,
-                        height: 1.0,
-                        color: Color(0xFF999999),
-                      ),
-                    ],
-                  ),
+                    ),
+                    SizedBox(width: 10.w),
+                    Container(
+                      width: 70.w,
+                      height: 1.0,
+                      color: Color(0xFF999999),
+                    ),
+                  ],
                 ),
+              ),
 
-                SizedBox(height: 21.h),
-                _buildIOSButtons(),
-                //if(!kIsWeb) Platform.isIOS? _buildAndroidButtons() : _buildIOSButtons(),
+              SizedBox(height: 21.h),
+              _buildIOSButtons(),
+              //if(!kIsWeb) Platform.isIOS? _buildAndroidButtons() : _buildIOSButtons(),
 
-                //Platform.isAndroid? _buildIOSButtons() :_buildAndroidButtons(),
-                /*
+              //Platform.isAndroid? _buildIOSButtons() :_buildAndroidButtons(),
+              /*
               // SNS 아이콘
               Container(
                 width: screenSize.width * 240 / design_w,
@@ -238,49 +240,47 @@ class _selectLoginOptionState extends State<SelectLoginOption> {
                 ),
               ),*/
 
-                SizedBox(height: 30.h),
+              SizedBox(height: 30.h),
 
-                // 회원 로그인
-                Container(
-                  width: 280.w,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Container(
-                        width: 70.w,
-                        height: 1.0,
-                        color: Color(0xFF999999),
-                      ),
-                      SizedBox(width: 10.w),
-                      Container(
-                        width: 120.w,
-                        child: Text(
-                          '회원 로그인',
-                          style:
-                          TextStyle(
-                            fontFamily: "Pretendard",
-                            color: Color(0xFF999999),
-                            fontSize: 14.sp,
-                            fontWeight: FontWeight.w500,
-                          ),
-                          textAlign: TextAlign.center,
+              // 회원 로그인
+              Container(
+                width: 280.w,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Container(
+                      width: 70.w,
+                      height: 1.0,
+                      color: Color(0xFF999999),
+                    ),
+                    SizedBox(width: 10.w),
+                    Container(
+                      width: 120.w,
+                      child: Text(
+                        '회원 로그인',
+                        style:
+                        TextStyle(
+                          fontFamily: "Pretendard",
+                          color: Color(0xFF999999),
+                          fontSize: min(14.sp, 14.h),
+                          fontWeight: FontWeight.w500,
                         ),
+                        textAlign: TextAlign.center,
                       ),
-                      SizedBox(width: 10.w),
-                      Container(
-                        width: 70.w,
-                        height: 1.0,
-                        color: Color(0xFF999999),
-                      ),
-                    ],
-                  ),
+                    ),
+                    SizedBox(width: 10.w),
+                    Container(
+                      width: 70.w,
+                      height: 1.0,
+                      color: Color(0xFF999999),
+                    ),
+                  ],
                 ),
+              ),
 
-
-                SizedBox(height: 21.h),
-                _buildUserButton(),
-              ],
-            ),
+              SizedBox(height: 21.h),
+              _buildUserButton(),
+            ],
           ),
         ),
       ),

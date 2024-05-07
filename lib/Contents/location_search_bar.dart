@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/widgets.dart';
@@ -27,9 +29,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 
 class LocationSearchBar extends StatefulWidget {
-  final Function(String) onLocationChanged;
+  //final Function(String) onLocationChanged;
 
-  LocationSearchBar({Key? key, required this.onLocationChanged}) : super(key: key);
+  //LocationSearchBar({Key? key, required this.onLocationChanged}) : super(key: key);
 
   @override
   _locationSearchBarState createState() => _locationSearchBarState();
@@ -58,7 +60,7 @@ class _locationSearchBarState extends State<LocationSearchBar> {
             '위치 정보를 사용할 수 없습니다.',
             style: TextStyle(
               fontWeight: FontWeight.w800,
-              fontSize: 16.sp,
+              fontSize: min(16.h, 16.sp),
               fontFamily: "Pretendard"
             ),
           ),
@@ -69,7 +71,7 @@ class _locationSearchBarState extends State<LocationSearchBar> {
                   '서비스 이용을 위해서는 동네곳곳의 위치정보 사용약관 동의가 필요합니다.',
                   style: TextStyle(
                       fontWeight: FontWeight.w500,
-                      fontSize: 16.sp,
+                      fontSize: min(16.h, 16.sp),
                       fontFamily: "Pretendard"
                   ),
                 ),
@@ -82,7 +84,7 @@ class _locationSearchBarState extends State<LocationSearchBar> {
                 '동의하러 가기',
                 style: TextStyle(
                   fontWeight: FontWeight.w500,
-                  fontSize: 14.sp,
+                  fontSize: min(14.h, 14.sp),
                   fontFamily: "Pretendard"
                 ),
               ),
@@ -102,7 +104,7 @@ class _locationSearchBarState extends State<LocationSearchBar> {
                 '취소',
                 style: TextStyle(
                     fontWeight: FontWeight.w500,
-                    fontSize: 14.sp,
+                    fontSize: min(14.h, 14.sp),
                     fontFamily: "Pretendard"
                 ),
               ),
@@ -168,7 +170,7 @@ class _locationSearchBarState extends State<LocationSearchBar> {
 
   void _handleLocationChange(String newLocation) {
     // 주소변경 시점에 콜백함수 호출
-    widget.onLocationChanged(newLocation);
+    //widget.onLocationChanged(newLocation);
   }
 
   @override
@@ -215,7 +217,7 @@ class _locationSearchBarState extends State<LocationSearchBar> {
                       style: TextStyle(
                         color: Colors.black,
                         fontWeight: FontWeight.w800,
-                        fontSize: 16.sp,
+                        fontSize: min(16.h, 16.sp),
                         fontFamily: "Pretendard",
                       ),
                       maxLines: 1,
@@ -249,10 +251,10 @@ class _locationSearchBarState extends State<LocationSearchBar> {
               child: Container(
                 alignment: Alignment.center,
                 width: 25.w,
-                height: 25.h,
+                height: 22.h,
                 child: Icon(
                   CupertinoIcons.search,
-                  size: 25.h,
+                  size: 22.h,
                 ),
               ),
             ),

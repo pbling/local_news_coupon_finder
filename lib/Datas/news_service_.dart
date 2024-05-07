@@ -11,8 +11,6 @@ class NewsNewService {
   List<News> _newses = [];
 
   Future<List<News>> getAllNewses() async {
-    // 2s 뒤에 데이터 반환
-    await Future.delayed(Duration(seconds: 2));
     return [
       News(
         newsId: 'news1',

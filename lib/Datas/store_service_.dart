@@ -10,8 +10,6 @@ class StoreNewService {
   List<Store> _stores = [];
 
   Future<List<Store>> getAllStores() async {
-    // 2s 뒤에 데이터 반환
-    await Future.delayed(Duration(seconds: 2));
     return [
       Store(
         storeId: 'store1',

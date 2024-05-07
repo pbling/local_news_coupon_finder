@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -100,8 +102,8 @@ class _couponListViewState extends State<CouponListView> {
                               child: Image.network(
                                 'https://cdn.pixabay.com/photo/2024/03/14/08/52/pug-8632718_1280.jpg',
                                 fit: BoxFit.cover,
-                                width: 40.w,
-                                height: 40.h,
+                                width: min(40.w, 40.h),
+                                height: min(40.w, 40.h),
                               ),
                             ),
                           ),
@@ -117,7 +119,7 @@ class _couponListViewState extends State<CouponListView> {
                                   widget.couponList[index].storeId,
                                   style: TextStyle(
                                     fontWeight: FontWeight.w800,
-                                    fontSize: 18.sp,
+                                    fontSize: min(18.sp, 18.h),
                                     fontFamily: "Pretendard",
                                   ),
                                 ),
@@ -128,7 +130,7 @@ class _couponListViewState extends State<CouponListView> {
                                   widget.couponList[index].storeId,
                                   style: TextStyle(
                                     fontWeight: FontWeight.w500,
-                                    fontSize: 14.sp,
+                                    fontSize: min(14.sp, 14.h),
                                     fontFamily: "Pretendard",
                                   ),
                                 ),
@@ -166,7 +168,7 @@ class _couponListViewState extends State<CouponListView> {
                                         widget.couponList[index].couponDetail,
                                         style: TextStyle(
                                           fontWeight: FontWeight.w800,
-                                          fontSize: 16.sp,
+                                          fontSize: min(16.sp, 16.h),
                                           fontFamily: "Pretendard",
                                         ),
                                         maxLines: 1,
@@ -176,7 +178,7 @@ class _couponListViewState extends State<CouponListView> {
                                         isstartEndDate(index),
                                         style: TextStyle(
                                           fontWeight: FontWeight.w500,
-                                          fontSize: 14.sp,
+                                          fontSize: min(14.sp, 14.h),
                                           fontFamily: "Pretendard",
                                           color: Color(0xFF999999),
                                         ),
@@ -186,18 +188,17 @@ class _couponListViewState extends State<CouponListView> {
                                         height: 20.h,
                                         child: Row(
                                           children: [
-                                            Image.asset(
-                                              'assets/images/icon/place.png',
-                                              width: 13.w,
-                                              height: 15.h,
-                                              fit: BoxFit.fitHeight,
+                                            Icon(
+                                              Icons.storefront,
+                                              size: min(14.sp, 14.h),
+                                              color: Color(0xFF5EF3D5),
                                             ),
-                                            SizedBox(width: 6.12.w),
+                                            SizedBox(width: 4.03.w),
                                             Text(
                                               widget.couponList[index].storeId,
                                               style: TextStyle(
                                                 fontWeight: FontWeight.w500,
-                                                fontSize: 14.sp,
+                                                fontSize: min(14.sp, 14.h),
                                                 fontFamily: "Pretendard",
                                                 color: Color(0xFF5EF3D5),
                                               ),
@@ -218,22 +219,39 @@ class _couponListViewState extends State<CouponListView> {
                                   print('다운로드 아이콘 클릭');
                                 } ,
                                 child: Container(
-                                  alignment: Alignment.center,
-                                  decoration: BoxDecoration(
-                                      color: Color(0xFFD4D4D8),
-                                      borderRadius: BorderRadius.only(
-                                        topLeft: Radius.circular(0),
-                                        bottomLeft: Radius.circular(0),
-                                        topRight: Radius.circular(20),
-                                        // 좌측만 둥글게
-                                        bottomRight:
-                                        Radius.circular(20), // 좌측만 둥글게
-                                      )),
-                                  child: Icon(
-                                    Icons.file_download,
-                                    color: Colors.white,
-                                    size: 35.sp,
-                                  ),
+                                    alignment: Alignment.center,
+                                    decoration: BoxDecoration(
+                                        color: Color(0xFFD4D4D8),
+                                        borderRadius: BorderRadius.only(
+                                          topLeft: Radius.circular(0),
+                                          bottomLeft: Radius.circular(0),
+                                          topRight: Radius.circular(20),
+                                          // 좌측만 둥글게
+                                          bottomRight:
+                                          Radius.circular(20), // 좌측만 둥글게
+                                        )),
+                                    child: Column(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      crossAxisAlignment: CrossAxisAlignment.center,
+                                      children: [
+                                        Icon(
+                                          Icons.file_download,
+                                          color: Colors.white,
+                                          size: min(30.h, 30.sp),
+                                        ),
+                                        SizedBox(height: 3.h),
+                                        Text(
+                                          '000개 남음',
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.w500,
+                                            fontSize: min(10.h, 10.sp),
+                                            fontFamily: "Pretendard",
+                                            color: Colors.white,
+                                          ),
+                                          textAlign: TextAlign.center,
+                                        )
+                                      ],
+                                    )
                                 ),
                               ),
                             ),

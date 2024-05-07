@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -11,58 +13,124 @@ class FindPassword extends StatefulWidget {
 
 class _findPasswordState extends State<FindPassword>{
 
+  TextEditingController _idController = TextEditingController();
   TextEditingController _phoneController = TextEditingController();
   TextEditingController _phoneConfirmController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
 
-    return Scaffold(
-      appBar: AppBar(
-        toolbarHeight: 52.h,
-        bottomOpacity : 0.0,
-        backgroundColor: Colors.white,
-        flexibleSpace: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Container(
-              color: Colors.white,
-              alignment: Alignment.centerLeft,
-              width: 300.w,
-              height: 50.h,
-              child: Row(
-                children: [
-                  SizedBox(width: 25.w),
-                  Text(
-                    '회원가입',
-                    style: TextStyle(
-                        fontWeight: FontWeight.w800,
-                        fontSize: 16.sp,
-                        fontFamily: "Pretendard"
-                    ),
-                    textAlign: TextAlign.left,
-                  ),
-                ],
+    return SafeArea(
+      child : Scaffold(
+        appBar: PreferredSize(
+          preferredSize: Size(360.w, 50.h),
+          child: AppBar(
+            toolbarHeight: 50.h,
+            leading: IconButton(
+              icon: Icon(
+                Icons.arrow_back_ios_new_outlined,
+                size: min(16.h, 16.sp),
               ),
+              onPressed: () {
+                Navigator.pop(context); // 이전 화면으로 돌아가기
+              },
             ),
-            Container(
-              height: 1, // 회색 줄의 높이
-              color: Color(0xFFF5F5F5), // 회색 줄의 색상
+            flexibleSpace: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Container(
+                  color: Colors.white,
+                  alignment: Alignment.centerLeft,
+                  width: 360.w,
+                  height: 49.h,
+                  child: Row(
+                    children: [
+                      SizedBox(width: 50.w),
+                      Text(
+                        "비밀번호 찾기",
+                        style: TextStyle(
+                            fontWeight: FontWeight.w800,
+                            fontSize: min(16.h, 16.sp),
+                            fontFamily: "Pretendard"
+                        ),
+                        textAlign: TextAlign.left,
+                      ),
+                    ],
+                  ),
+                ),
+                Container(
+                  height: 1.h, // 회색 줄의 높이
+                  color: Color(0xFFF5F5F5), // 회색 줄의 색상
+                ),
+              ],
             ),
-          ],
+          ),
         ),
-      ),
-      body: SafeArea(
-        child: Container(
+        body: Container(
             padding: EdgeInsets.only(left: 20.w, right: 20.w, top: 20.h, bottom: .20.h),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
+                  '아이디 입력',
+                  style: TextStyle(
+                      fontWeight: FontWeight.w800,
+                      fontSize: min(16.sp, 16.h),
+                      fontFamily: "Pretendard"
+                  ),
+                  textAlign: TextAlign.left,
+                ),
+
+                SizedBox(height: 10.h),
+                Container(
+                  width: 320.w,
+                  height: 45.h,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Container(
+                        alignment: Alignment.centerLeft,
+                        width: 320.w,
+                        height: 45.h,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10.0),
+                          color: Color(0xFFF6F6F6), // 배경색 설정
+                        ),
+                        child: TextField(
+                          controller: _idController,
+                          style: TextStyle(
+                              fontWeight: FontWeight.w500,
+                              fontSize: min(14.sp, 14.h),
+                              fontFamily: "Pretendard"
+                          ),
+                          onChanged: (value) {
+                            setState(() {
+                            });
+                          },
+                          decoration: InputDecoration(
+                            hintText: '아이디',
+                            hintStyle: TextStyle(
+                              fontFamily: "Pretendard",
+                              fontSize: min(14.sp, 14.h),
+                            ),
+                            border: InputBorder.none,
+                            filled: true,
+                            fillColor: Colors.transparent,
+                          ),
+                        ),
+                      ),
+
+                    ],
+                  ),
+                ),
+
+                SizedBox(height: 25.h),
+
+                Text(
                   '휴대폰번호 입력',
                   style: TextStyle(
                       fontWeight: FontWeight.w800,
-                      fontSize: 16.sp,
+                      fontSize: min(16.sp, 16.h),
                       fontFamily: "Pretendard"
                   ),
                   textAlign: TextAlign.left,
@@ -73,7 +141,7 @@ class _findPasswordState extends State<FindPassword>{
                   style : TextStyle(
                       color : Colors.grey,
                       fontWeight: FontWeight.w500,
-                      fontSize: 10.sp,
+                      fontSize: min(12.sp, 12.h),
                       fontFamily: "Pretendard"
                   ),
                   textAlign: TextAlign.left,
@@ -84,19 +152,25 @@ class _findPasswordState extends State<FindPassword>{
 
                 Container(
                   width: 320.w,
-                  height: 42.h,
+                  height: 45.h,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Container(
+                        alignment: Alignment.centerLeft,
                         width: 240.w,
-                        height: 38.h,
+                        height: 45.h,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10.0),
                           color: Color(0xFFF6F6F6), // 배경색 설정
                         ),
                         child: TextField(
                           controller: _phoneController,
+                          style: TextStyle(
+                              fontWeight: FontWeight.w500,
+                              fontSize: min(14.sp, 14.h),
+                              fontFamily: "Pretendard"
+                          ),
                           onChanged: (value) {
                             setState(() {
                             });
@@ -105,7 +179,7 @@ class _findPasswordState extends State<FindPassword>{
                             hintText: '휴대폰번호',
                             hintStyle: TextStyle(
                               fontFamily: "Pretendard",
-                              fontSize: 12.sp,
+                              fontSize: min(14.sp, 14.h),
                             ),
                             border: InputBorder.none,
                             filled: true,
@@ -113,7 +187,6 @@ class _findPasswordState extends State<FindPassword>{
                           ),
                         ),
                       ),
-
                       Container(
                         width: 70.w,
                         height: 30.h,
@@ -125,51 +198,100 @@ class _findPasswordState extends State<FindPassword>{
                               ),
                               padding: EdgeInsets.zero,
                             ),
-                            onPressed: (){},
+                            onPressed: (){
+
+                            },
                             child: Center(
                               child :Text(
-                                '중복확인',
+                                '인증번호',
                                 style: TextStyle(
                                   fontFamily: "Pretendard",
                                   color: Colors.black87,
                                   fontWeight: FontWeight.w500,
-                                  fontSize: 11.sp, // 텍스트 컬러 변경
+                                  fontSize: min(11.sp, 11.h), // 텍스트 컬러 변경
                                 ),
                               ),
                             )
                         ),
                       )
+
                     ],
                   ),
                 ),
 
 
+
                 SizedBox(height: 8.h),
-                // 비밀번호 확인
+
                 Container(
                   width: 320.w,
-                  height: 38.h,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10.0),
-                    color: Color(0xFFF6F6F6), // 배경색 설정
-                  ),
-                  child: TextField(
-                    controller: _phoneConfirmController,
-                    onChanged: (value) {
-                      setState(() {
-                      });
-                    },
-                    decoration: InputDecoration(
-                      hintText: '인증번호 확인',
-                      hintStyle: TextStyle(
-                        fontSize: 12.sp,
+                  height: 45.h,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Container(
+                        alignment: Alignment.centerLeft,
+                        width: 240.w,
+                        height: 45.h,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10.0),
+                          color: Color(0xFFF6F6F6), // 배경색 설정
+                        ),
+                        child: TextField(
+                          controller: _phoneConfirmController,
+                          style: TextStyle(
+                              fontWeight: FontWeight.w500,
+                              fontSize: min(14.sp, 14.h),
+                              fontFamily: "Pretendard"
+                          ),
+                          onChanged: (value) {
+                            setState(() {
+                            });
+                          },
+                          decoration: InputDecoration(
+                            hintText: '인증번호 입력',
+                            hintStyle: TextStyle(
+                              fontFamily: "Pretendard",
+                              fontSize: min(14.sp, 14.h),
+                            ),
+                            border: InputBorder.none,
+                            filled: true,
+                            fillColor: Colors.transparent,
+                          ),
+                        ),
                       ),
-                      border: InputBorder.none,
-                      filled: true,
-                      fillColor: Colors.transparent,
-                    ),
+                      Container(
+                        width: 70.w,
+                        height: 30.h,
+                        child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              foregroundColor: Colors.grey, // 버튼 배경색 변경
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(5.0), // 버튼 모양을 직사각형으로 변경
+                              ),
+                              padding: EdgeInsets.zero,
+                            ),
+                            onPressed: (){
+
+                            },
+                            child: Center(
+                              child :Text(
+                                '확인',
+                                style: TextStyle(
+                                  fontFamily: "Pretendard",
+                                  color: Colors.black87,
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: min(11.sp, 11.h), // 텍스트 컬러 변경
+                                ),
+                              ),
+                            )
+                        ),
+                      )
+
+                    ],
                   ),
                 ),
+
 
                 SizedBox(height: 21.h),
                 // 로그인하기
@@ -200,7 +322,7 @@ class _findPasswordState extends State<FindPassword>{
                           fontFamily: "Pretendard",
                           color: Colors.black,
                           fontWeight: FontWeight.w700,
-                          fontSize: 16.sp,
+                          fontSize: min(16.sp, 16.h),
                         ),
                       ),
                     ),
@@ -211,6 +333,5 @@ class _findPasswordState extends State<FindPassword>{
         ),
       ),
     );
-
   }
 }

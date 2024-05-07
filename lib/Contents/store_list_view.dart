@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -20,17 +22,12 @@ class StoreListView extends StatefulWidget {
 class _StoreListViewState extends State<StoreListView> {
 
   bool isFavorite = false;
-  List<bool> isFavoriteList = [];
-
-  void initState(){
-    isFavoriteList = List.generate(widget.storeList.length, (index) => false);
-  }
 
   @override
   Widget build(BuildContext context) {
     return Container(
       width: 360.w,
-      height: 365.h * widget.storeList.length + 10,
+      height: 355.h * widget.storeList.length + 15,
 
       child: ListView.builder(
         shrinkWrap: true,
@@ -76,7 +73,6 @@ class _StoreListViewState extends State<StoreListView> {
                         child: GestureDetector(
                           onTap: () {
                             setState(() {
-                              isFavoriteList[index] = !isFavoriteList[index];
                             });
                             print('즐겨찾기 상점에 추가');
                           },
@@ -84,12 +80,12 @@ class _StoreListViewState extends State<StoreListView> {
                             width: 40.w,
                             height: 40.h,
                             decoration: BoxDecoration(
-                              color: isFavoriteList[index] ?
+                              color: isFavorite ?
                               Colors.cyanAccent.withOpacity(0.5) : Colors.black.withOpacity(0.5),
                               shape: BoxShape.circle,
                             ),
                             child: Icon(
-                              isFavoriteList[index] ?
+                              isFavorite ?
                               Icons.favorite : Icons.favorite_border,
                               color: Colors.white,
                               size: 24.w,
@@ -101,7 +97,7 @@ class _StoreListViewState extends State<StoreListView> {
                   ),
 
                   // 박스 하단부분 상점 설명
-                  Padding(
+                  Container(
                     padding: EdgeInsets.only(left : 20.w, right: 20.w, top: 20.h, bottom: 20.h),
                     child : GestureDetector(
                       onTap: () {
@@ -113,132 +109,130 @@ class _StoreListViewState extends State<StoreListView> {
                           ),
                         );
                       },
-                      child: Container(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.center,
+                      child : Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          // 가게명, 지역
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
-                              // 가게명, 지역
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Text(
-                                    widget.storeList[index].storeId,
-                                    //'가게명 표출',
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.w800,
-                                      fontSize: 18.sp,
-                                      fontFamily: "Pretendard",
-                                      color: Colors.black,
-                                    ),
-                                    textAlign: TextAlign.left,
-                                  ),
-                                  Text(
-                                    //widget.storeList[index].storeId,
-                                    '성북구 지역 · 뷰티',
+                              Text(
+                                widget.storeList[index].storeId,
+                                //'가게명 표출',
+                                style: TextStyle(
+                                  fontWeight: FontWeight.w800,
+                                  fontSize: min(18.h, 18.sp),
+                                  fontFamily: "Pretendard",
+                                  color: Colors.black,
+                                ),
+                                textAlign: TextAlign.left,
+                              ),
+                              Text(
+                                //widget.storeList[index].storeId,
+                                '성북구 지역 · 뷰티',
+                                style: TextStyle(
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: min(14.h, 14.sp),
+                                  fontFamily: "Pretendard",
+                                  color: Color(0xFF999999),
+                                ),
+                                textAlign: TextAlign.right,
+                              ),
+                            ],
+                          ),
+
+                          // 가게 정보
+                          SizedBox(height: 15.h),
+                          Text(
+                            '신장개업했습니다! 이벤트 확인해보세요~ 좋은 혜택이 많이 있습니다.',
+                            style: TextStyle(
+                              fontWeight: FontWeight.w500,
+                              fontSize: min(16.h, 16.sp),
+                              fontFamily: "Pretendard",
+                              color: Colors.black,
+                            ),
+                            textAlign: TextAlign.left,
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+
+                          // 소식, 쿠폰 갯수, 좋아요 갯수,
+                          SizedBox(height: 15.h),
+                          Row(
+                            children: [
+                              Container(
+                                width: 55.w,
+                                height: 20.h,
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.rectangle,
+                                  borderRadius: BorderRadius.circular(10.0),
+                                  color: Color(0xFFEDEDED),
+                                ),
+                                child: Center(
+                                  child: Text(
+                                    '소식 00개',
+                                    //'소식　${widget.storeList[index].newsNumber}개',
                                     style: TextStyle(
                                       fontWeight: FontWeight.w500,
-                                      fontSize: 14.sp,
+                                      fontSize: min(10.h, 10.sp),
+                                      fontFamily: "Pretendard",
+                                      color: Color(0xFF5EF3D5),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              SizedBox(width: 10.w),
+                              Container(
+                                width: 55.w,
+                                height: 20.h,
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.rectangle,
+                                  borderRadius: BorderRadius.circular(10.0),
+                                  color: Color(0xFFEDEDED),
+                                ),
+                                child: Center(
+                                  child: Text(
+                                    '쿠폰 00개',
+                                    //'소식　${widget.storeList[index].newsNumber}개',
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.w500,
+                                      fontSize: min(10.h, 10.sp),
+                                      fontFamily: "Pretendard",
+                                      color: Color(0xFF5EF3D5),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              SizedBox(width: 10.w),
+                              Spacer(),
+                              Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Icon(
+                                    Icons.favorite,
+                                    color: Color(0xFF5EF3D5),
+                                    size: min(12.h, 12.sp),
+                                  ),
+                                  SizedBox(width: 5.5.w), // 하트 아이콘과 좋아요 수 사이의 간격
+                                  Text(
+                                    '000명이 PICK',
+                                    //'${widget.storeList[index].favoriteNumber}명이 좋아합니다.',
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.w500,
+                                      fontSize: min(12.h, 12.sp),
                                       fontFamily: "Pretendard",
                                       color: Color(0xFF999999),
                                     ),
                                     textAlign: TextAlign.right,
                                   ),
                                 ],
-                              ),
-
-                              // 가게 정보
-                              SizedBox(height: 15.h),
-                              Text(
-                                '신장개업했습니다! 이벤트 확인해보세요~ 좋은 혜택이 많이 있습니다.',
-                                style: TextStyle(
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: 16.sp,
-                                  fontFamily: "Pretendard",
-                                  color: Colors.black,
-                                ),
-                                textAlign: TextAlign.left,
-                                maxLines: 2,
-                                overflow: TextOverflow.ellipsis,
-                              ),
-
-                              // 소식, 쿠폰 갯수, 좋아요 갯수,
-                              SizedBox(height: 15.h),
-                              Row(
-                                children: [
-                                  Container(
-                                    width: 55.w,
-                                    height: 20.h,
-                                    decoration: BoxDecoration(
-                                      shape: BoxShape.rectangle,
-                                      borderRadius: BorderRadius.circular(10.0),
-                                      color: Color(0xFFEDEDED),
-                                    ),
-                                    child: Center(
-                                      child: Text(
-                                        '소식 00개',
-                                        //'소식　${widget.storeList[index].newsNumber}개',
-                                        style: TextStyle(
-                                          fontWeight: FontWeight.w500,
-                                          fontSize: 10.sp,
-                                          fontFamily: "Pretendard",
-                                          color: Color(0xFF5EF3D5),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                  SizedBox(width: 10.w),
-                                  Container(
-                                    width: 55.w,
-                                    height: 20.h,
-                                    decoration: BoxDecoration(
-                                      shape: BoxShape.rectangle,
-                                      borderRadius: BorderRadius.circular(10.0),
-                                      color: Color(0xFFEDEDED),
-                                    ),
-                                    child: Center(
-                                      child: Text(
-                                        '쿠폰 00개',
-                                        //'소식　${widget.storeList[index].newsNumber}개',
-                                        style: TextStyle(
-                                          fontWeight: FontWeight.w500,
-                                          fontSize: 10.sp,
-                                          fontFamily: "Pretendard",
-                                          color: Color(0xFF5EF3D5),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                  SizedBox(width: 10.w),
-                                  Spacer(),
-                                  Row(
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: [
-                                      Icon(
-                                        Icons.favorite,
-                                        color: Color(0xFF5EF3D5),
-                                        size: 15.sp,
-                                      ),
-                                      SizedBox(width: 5.w), // 하트 아이콘과 좋아요 수 사이의 간격
-                                      Text(
-                                        '000명이 Pick',
-                                        //'${widget.storeList[index].favoriteNumber}명이 좋아합니다.',
-                                        style: TextStyle(
-                                          fontWeight: FontWeight.w500,
-                                          fontSize: 12.sp,
-                                          fontFamily: "Pretendard",
-                                          color: Color(0xFF999999),
-                                        ),
-                                        textAlign: TextAlign.right,
-                                      ),
-                                    ],
-                                  )
-                                ],
                               )
                             ],
-                          ),
-                        ),
+                          )
+                        ],
+                      ),
                     ),
                   ),
                 ],

@@ -195,20 +195,14 @@ class _mapSearchPageState extends State<MapSearchPage> {
 
   @override
   Widget _buildMapSearchPageWidget() {
-    return Scaffold(
-      appBar: AppBar(
-        bottomOpacity: 0.0,
-        backgroundColor: Colors.white,
-        toolbarHeight: 50.h,
-        flexibleSpace: LocationSearchBar(onLocationChanged: _handleLocationChange),
-      ),
-      body : Column(
+    return Container(
+        child : Column(
         children: [
           // 서브카테고리 메뉴
           Container(
             color: Colors.white,
             child: Padding(
-              padding: EdgeInsets.only(left: 20.w, top: 15.h, bottom: 15.h),
+              padding: EdgeInsets.only(left: 20.w, right: 20.w, top: 15.h, bottom: 15.h),
               child: TabWithImageListView(
                 tabItems: _categoryNameList,
                 tabImages: _categoryIconList,

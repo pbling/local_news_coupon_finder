@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -52,19 +54,25 @@ class _newsListViewState extends State<NewsListView> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
 
-                      Container(
-                        alignment: Alignment.centerLeft,
-                        child: Text(
-                          '오픈 특가 행사합니다.',
-                          //widget.newsList[index].newsDetail,
-                          style: TextStyle(
-                            fontWeight: FontWeight.w800,
-                            fontSize: 18.sp,
-                            fontFamily: "Pretendard",
-                            color: Colors.black,
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Icon(
+                            Icons.star,
+                            size: min(16.sp, 16.h),
                           ),
-                          maxLines: 1,
-                        ),
+                          SizedBox(width: 5.w),
+                          Text(
+                            '오픈 특가 행사합니다.',
+                            style: TextStyle(
+                              fontFamily: "Pretendard",
+                              fontSize: min(16.sp, 16.h),
+                              fontWeight: FontWeight.w800,
+                            ),
+                            textAlign: TextAlign.left,
+                          ),
+                        ],
                       ),
 
                       // 가게 대표 사진
@@ -88,7 +96,7 @@ class _newsListViewState extends State<NewsListView> {
                             DateFormat('yyyy-MM-dd').format(widget.newsList[index].createdDate),
                             style: TextStyle(
                               fontWeight: FontWeight.w500,
-                              fontSize: 12.sp,
+                              fontSize: min(12.sp, 12.h),
                               fontFamily: "Pretendard",
                               color: Color(0xFF999999),
                             ),
@@ -110,7 +118,7 @@ class _newsListViewState extends State<NewsListView> {
                                 //'소식　${widget.storeList[index].newsNumber}개',
                                 style: TextStyle(
                                   fontWeight: FontWeight.w800,
-                                  fontSize: 12.sp,
+                                  fontSize: min(12.sp, 12.h),
                                   fontFamily: "Pretendard",
                                   color: Color(0xFF5EF3D5),
                                 ),
@@ -129,7 +137,7 @@ class _newsListViewState extends State<NewsListView> {
                           //widget.newsList[index].newsDetail,
                           style: TextStyle(
                             fontWeight: FontWeight.w500,
-                            fontSize: 16.sp,
+                            fontSize: min(16.sp, 16.h),
                             fontFamily: "Pretendard",
                             color: Colors.black,
                           ),
@@ -142,7 +150,7 @@ class _newsListViewState extends State<NewsListView> {
               ),
               Container(
                 width: 360.w,
-                height: 10.h,
+                height: 15.h,
                 color: Color(0xFFF5F5F5),
               )
             ],

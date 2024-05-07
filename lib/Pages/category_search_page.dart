@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:auto_size_text/auto_size_text.dart';
@@ -153,133 +155,153 @@ class _categorySearchPageState extends State<CategorySearchPage> {
   @override
   Widget _buildCategorySearchPageWidget() {
 
-    return Scaffold(
-      appBar: AppBar(
-        toolbarHeight: 52.h,
-        bottomOpacity : 0.0,
-        backgroundColor: Colors.white,
-        flexibleSpace: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Container(
-              color: Colors.white,
-              alignment: Alignment.centerLeft,
-              width: 300.w,
-              height: 50.h,
-              child: Row(
-                children: [
-                  SizedBox(width: 25.w),
-                  Text(
-                    '주변 동네상점 검색',
-                    style: TextStyle(
-                        fontWeight: FontWeight.w800,
-                        fontSize: 16.0.sp,
-                        fontFamily: "Pretendard"
-                    ),
-                    textAlign: TextAlign.left,
-                  ),
-                ],
+    return SafeArea(
+      child: Scaffold(
+        appBar: PreferredSize(
+          preferredSize: Size(360.w, 50.h),
+          child: AppBar(
+            toolbarHeight: 50.h,
+            backgroundColor: Colors.red,
+            leading: IconButton(
+              icon: Icon(
+                Icons.arrow_back_ios_new_outlined,
+                size: min(16.h, 16.sp),
               ),
+              onPressed: () {
+                Navigator.pop(context); // 이전 화면으로 돌아가기
+              },
             ),
-            Container(
-              height: 1, // 회색 줄의 높이
-              color: Color(0xFFF5F5F5), // 회색 줄의 색상
-            ),
-          ],
-        ),
-      ),
-
-      body : Column(
-        children: [
-          // 서브카테고리 메뉴
-          Container(
-            color: Colors.white,
-            child: Padding(
-              padding : EdgeInsets.only(left: 20.w, right: 20.w, top: 15.h, bottom: 15.h),
-              child: TabButtonListView(
-                tabItems: _currentSubMenuList,
-                onTabIndexChanged: _handleTabIndexChanged,
-              ),
-            ),
-          ),
-          Flexible(
-            child: SingleChildScrollView(
-              child: Container(
-                child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  _searchResults.isEmpty?
-                  SizedBox() : Container(
-                    alignment: Alignment.centerLeft,
-                    padding: EdgeInsets.only(left : 17.w, top: 30.h, bottom: 13.h),
-                    height: 80.h,
-                    child : Container(
-                      width: 109.w,
-                      height: 36.h,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(5),
-                        color: Colors.white,
-                      ),
-                      child : Container(
-                        alignment: Alignment.center,
-                        child : DropdownButton(
-                          items: [
-                            DropdownMenuItem(
-                              value: '최신순',
-                              child: Text('최신순　　'),
-                            ),
-                            DropdownMenuItem(
-                              value: '거리순',
-                              child: Text('거리순　　'),
-                            ),
-                          ],
-                          value: _selectedDropdown, // 현재 선택된 값
-                          onChanged: (value) {
-                            setState(() {
-                              _selectedDropdown = value.toString();
-                            });
-                            // 여기에 선택된 값에 따라 필요한 동작을 추가
-                            updateStoreList(_selectedDropdown);
-                          },
-                          underline: Container(),
-                          style: TextStyle(
-                            color: Color(0xFF999999),
-                            fontSize: 14.sp,
-                            fontFamily: "Pretendard",
-                          ),
-                          dropdownColor: Colors.white,
-                        ),
-                      ),
-                    ),
-                  ),
-
-
-                  // 검색 결과
-                  _searchResults.isEmpty?
-                  Column(
+            flexibleSpace: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Container(
+                  color: Colors.white,
+                  alignment: Alignment.centerLeft,
+                  width: 360.w,
+                  height: 49.h,
+                  child: Row(
                     children: [
-                      SizedBox(height: 200.h),
+                      SizedBox(width: 50.w),
                       Text(
-                        '검색 결과가 없습니다.',
+                        widget.mainMenu,
                         style: TextStyle(
-                            fontFamily: "Pretendard",
-                            fontSize: 16.sp,
-                            fontWeight: FontWeight.w500,
-                            color: Colors.grey
+                            fontWeight: FontWeight.w800,
+                            fontSize: min(16.h, 16.sp),
+                            fontFamily: "Pretendard"
                         ),
+                        textAlign: TextAlign.left,
                       ),
                     ],
-                  ) : Container(
-                      child: StoreListView(storeList: _searchResults)
                   ),
-                ],
-              ),
+                ),
+                Container(
+                  height: 1.h, // 회색 줄의 높이
+                  color: Color(0xFFF5F5F5), // 회색 줄의 색상
+                ),
+              ],
             ),
           ),
+        ),
+
+        body : Container(
+          color : Color(0xFFF5F5F5),
+          child: Column(
+            children: [
+              // 서브카테고리 메뉴
+              Container(
+                color: Colors.white,
+                child: Padding(
+                  padding : EdgeInsets.only(left: 20.w, right: 20.w, top: 20.h, bottom: 20.h),
+                  child: TabButtonListView(
+                    tabItems: _currentSubMenuList,
+                    onTabIndexChanged: _handleTabIndexChanged,
+                  ),
+                ),
+              ),
+
+              _searchResults.isEmpty?
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  SizedBox(height : 220.h),
+                  Image.asset(
+                    'assets/images/icon/noresult.png', // 이미지 경로
+                    width: 80.w,
+                    height: 80.h,
+                    color: Colors.grey,// 이미지 색상 변경 (예시)
+                  ),
+                  SizedBox(height: 10.h),
+                  Text(
+                    '빠르게 상점을 추가하겠습니다.',
+                    style: TextStyle(
+                      fontFamily: "Pretendard",
+                      fontSize: min(14.h, 14.sp),
+                      fontWeight: FontWeight.w500,
+                      color: Colors.grey,
+                    ),
+                  ),
+                ],
+              ) :
+              Expanded(
+                child: SingleChildScrollView(
+
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Container(
+                        alignment: Alignment.centerLeft,
+                        padding: EdgeInsets.only(left : 17.w, top: 30.h, bottom: 13.h),
+                        height: 80.h,
+                        child : Container(
+                          width: 109.w,
+                          height: 36.h,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(5),
+                            color: Colors.white,
+                          ),
+                          child : Container(
+                            alignment: Alignment.center,
+                            child : DropdownButton(
+                              items: [
+                                DropdownMenuItem(
+                                  value: '최신순',
+                                  child: Text('최신순　　'),
+                                ),
+                                DropdownMenuItem(
+                                  value: '거리순',
+                                  child: Text('거리순　　'),
+                                ),
+                              ],
+                              value: _selectedDropdown, // 현재 선택된 값
+                              onChanged: (value) {
+                                setState(() {
+                                  _selectedDropdown = value.toString();
+                                });
+                                // 여기에 선택된 값에 따라 필요한 동작을 추가
+                                updateStoreList(_selectedDropdown);
+                              },
+                              underline: Container(),
+                              style: TextStyle(
+                                color: Color(0xFF999999),
+                                fontSize: min(14.h, 14.sp),
+                                fontFamily: "Pretendard",
+                              ),
+                              dropdownColor: Colors.white,
+                            ),
+                          ),
+                        ),
+                      ),
+                      Container(
+                          child: StoreListView(storeList: _searchResults)
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
           ),
-        ],
+        )
       ),
     );
-
   }
 }

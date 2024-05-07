@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -244,15 +246,9 @@ class _CouponNewsPageState extends State<CouponNewsPage> {
 
   @override
   Widget _buildCouponNewsPageWidget() {
-    return Scaffold(
-      appBar: AppBar(
-        bottomOpacity: 0.0,
-        backgroundColor: Colors.white,
-        toolbarHeight: 50.h,
-        flexibleSpace: LocationSearchBar(onLocationChanged: _handleLocationChange),
-      ),
-
-      body: Column(
+    return Container(
+      color : Color(0xFFF5F5F5),
+      child : Column(
         children: [
           // 서브카테고리 메뉴
           Container(
@@ -260,8 +256,7 @@ class _CouponNewsPageState extends State<CouponNewsPage> {
             child: Column(
               children: [
                 Padding(
-                  padding: EdgeInsets.only(
-                      left: 20.w, top: 15.h, bottom: 15.h),
+                  padding : EdgeInsets.only(left: 20.w, right: 20.w, top: 20.h, bottom: 20.h),
                   child: TabWithImageListView(
                     tabItems: _categoryNameList,
                     tabImages: _categoryIconList,
@@ -269,9 +264,8 @@ class _CouponNewsPageState extends State<CouponNewsPage> {
                   ),
                 ),
                 Container(
-                  alignment: Alignment.centerRight,
-                  height: 50.h,
-                  margin: EdgeInsets.only(right: 20.w, bottom: 15.h),
+                  height: 60.h,
+                  padding : EdgeInsets.only(right: 20.w, bottom: 15.h),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
@@ -293,15 +287,23 @@ class _CouponNewsPageState extends State<CouponNewsPage> {
 
           _searchedCouponNewsList.isEmpty?
           Column(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              SizedBox(height: 200.h),
+              SizedBox(height : 180.h),
+              Image.asset(
+                'assets/images/icon/noresult.png', // 이미지 경로
+                width: 80.w,
+                height: 80.h,
+                color: Colors.grey,// 이미지 색상 변경 (예시)
+              ),
+              SizedBox(height: 10.h),
               Text(
-                '검색 결과가 없습니다.',
+                '빠르게 상점을 추가하겠습니다.',
                 style: TextStyle(
-                    fontFamily: "Pretendard",
-                    fontSize: 16.sp,
-                    fontWeight: FontWeight.w500,
-                    color: Colors.grey
+                  fontFamily: "Pretendard",
+                  fontSize: min(14.h, 14.sp),
+                  fontWeight: FontWeight.w500,
+                  color: Colors.grey,
                 ),
               ),
             ],
@@ -377,7 +379,7 @@ class _CouponNewsPageState extends State<CouponNewsPage> {
           ),
           elevation: isSelected ? 3 : 0,
           // 클릭된 버튼일 경우 그림자 효과
-          padding: EdgeInsets.symmetric(vertical: 0, horizontal: 18),
+          padding: EdgeInsets.symmetric(vertical: 14.h, horizontal: 12.w),
         ),
         child: Row(
           children: [
@@ -386,9 +388,10 @@ class _CouponNewsPageState extends State<CouponNewsPage> {
               buttonName,
               style: TextStyle(
                   fontWeight: FontWeight.w500,
-                  fontSize: 15.sp,
+                  fontSize: min(14.h, 14.sp),
                   fontFamily: "Pretendard"
               ),
+              textAlign: TextAlign.center,
             ),
           ],
         )

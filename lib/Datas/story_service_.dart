@@ -11,8 +11,6 @@ class StoryNewService {
   List<Story> _stories = [];
 
   Future<List<Story>> getAllStories() async {
-    // 2s 뒤에 데이터 반환
-    await Future.delayed(Duration(seconds: 0));
     return [
       Story(
         storyId: 'story1',

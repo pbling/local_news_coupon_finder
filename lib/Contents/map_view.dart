@@ -1,5 +1,8 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_naver_map/flutter_naver_map.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'dart:async';
 
 import '../Datas/models.dart';
@@ -30,7 +33,7 @@ class _mapViewState extends State<MapView> {
     // user의 주소정보가 있냐 없냐?
     var cameraPosition = NCameraPosition(
       target: NLatLng(widget.cameraPosInfo.x, widget.cameraPosInfo.y),
-      zoom: 12,
+      zoom: 13,
       bearing: 0,
       tilt: 0,
     );
@@ -54,6 +57,7 @@ class _mapViewState extends State<MapView> {
           selectedStore.addressPos.latitude,
           selectedStore.addressPos.longitude),
       icon: NOverlayImage.fromAssetImage('assets/images/icon/place.png'),
+      size: Size(20.w, 25.h),
     );
     return marker;
   }
@@ -116,8 +120,8 @@ class _mapViewState extends State<MapView> {
       child : NaverMap(
         options : NaverMapViewOptions(
           initialCameraPosition: _initCameraPosition,
-          minZoom: 3, // default is 0
-          maxZoom: 15, // default is 21
+          minZoom: 1, // default is 0
+          maxZoom: 20, // default is 21
           maxTilt: 0, // default is 63
         ),
         onMapReady: (NaverMapController controller) {

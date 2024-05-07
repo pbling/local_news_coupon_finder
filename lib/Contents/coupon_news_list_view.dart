@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -41,9 +43,9 @@ class _couponNewsListViewState extends State<CouponNewsListView> {
     String duration = '';
 
     if(widget.couponNewsList[index].startDate != null && widget.couponNewsList[index].endDate != null) {
-      String start = DateFormat('yy.MM.dd').format(widget.couponNewsList[index].startDate ?? DateTime.now());
-      String end = DateFormat('yy.MM.dd').format(widget.couponNewsList[index].endDate ?? DateTime.now());
-      duration = start + '~' + end;
+      String start = DateFormat('yyyy.MM.dd').format(widget.couponNewsList[index].startDate ?? DateTime.now());
+      String end = DateFormat('MM.dd').format(widget.couponNewsList[index].endDate ?? DateTime.now());
+      duration = start +'~'+ end;
     } else {
       duration = '';
     }
@@ -78,7 +80,7 @@ class _couponNewsListViewState extends State<CouponNewsListView> {
       }
     }
 
-    h = 232.0 * numCoupon + 365.0 * numNews;
+    h = 225.0 * numCoupon + 350.0 * numNews;
 
     print(numCoupon);
     print(numNews);
@@ -102,7 +104,9 @@ class _couponNewsListViewState extends State<CouponNewsListView> {
           return Column(
             children: [
               isCouponOrNews(widget.couponNewsList, index) == 'coupon'?
-              Padding(
+              Container(
+                color: Colors.white,
+                height: 210.h,
                 padding: EdgeInsets.only(left: 20.w, right: 20.w, top:20.h, bottom: 20.h),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -110,7 +114,7 @@ class _couponNewsListViewState extends State<CouponNewsListView> {
                   children: [
                     Container(
                       width: 360.w,
-                      height: 60.h,
+                      height: 50.h,
                       child: Row(
                         children: [
                           //가게사진
@@ -122,8 +126,8 @@ class _couponNewsListViewState extends State<CouponNewsListView> {
                               child: Image.network(
                                 'https://cdn.pixabay.com/photo/2024/03/14/08/52/pug-8632718_1280.jpg',
                                 fit: BoxFit.cover,
-                                width: 40.w,
-                                height: 40.h,
+                                width: min(40.w, 40.h),
+                                height: min(40.w, 40.h),
                               ),
                             ),
                           ),
@@ -139,7 +143,7 @@ class _couponNewsListViewState extends State<CouponNewsListView> {
                                   widget.couponNewsList[index].storeId,
                                   style: TextStyle(
                                     fontWeight: FontWeight.w800,
-                                    fontSize: 18.sp,
+                                    fontSize: min(18.h, 18.sp),
                                     fontFamily: "Pretendard",
                                   ),
                                 ),
@@ -150,7 +154,7 @@ class _couponNewsListViewState extends State<CouponNewsListView> {
                                   widget.couponNewsList[index].storeId,
                                   style: TextStyle(
                                     fontWeight: FontWeight.w500,
-                                    fontSize: 14.sp,
+                                    fontSize: min(14.h, 14.sp),
                                     fontFamily: "Pretendard",
                                   ),
                                 ),
@@ -161,7 +165,7 @@ class _couponNewsListViewState extends State<CouponNewsListView> {
                       ),
                     ),
 
-                    SizedBox(height : 20.h),
+                    SizedBox(height : 18.h),
                     // 쿠폰 정보
                     Container(
                       width: 360.w,
@@ -188,7 +192,7 @@ class _couponNewsListViewState extends State<CouponNewsListView> {
                                         widget.couponNewsList[index].detail,
                                         style: TextStyle(
                                           fontWeight: FontWeight.w800,
-                                          fontSize: 16.sp,
+                                          fontSize: min(16.h, 16.sp),
                                           fontFamily: "Pretendard",
                                         ),
                                         maxLines: 1,
@@ -198,7 +202,7 @@ class _couponNewsListViewState extends State<CouponNewsListView> {
                                         isstartEndDate(index),
                                         style: TextStyle(
                                           fontWeight: FontWeight.w500,
-                                          fontSize: 14.sp,
+                                          fontSize: min(14.h, 14.sp),
                                           fontFamily: "Pretendard",
                                           color: Color(0xFF999999),
                                         ),
@@ -208,18 +212,17 @@ class _couponNewsListViewState extends State<CouponNewsListView> {
                                         height: 20.h,
                                         child: Row(
                                           children: [
-                                            Image.asset(
-                                              'assets/images/icon/place.png',
-                                              width: 13.w,
-                                              height: 15.h,
-                                              fit: BoxFit.fitHeight,
+                                            Icon(
+                                              Icons.storefront,
+                                              size: min(14.sp, 14.h),
+                                              color: Color(0xFF5EF3D5),
                                             ),
-                                            SizedBox(width: 6.12.w),
+                                            SizedBox(width: 4.03.w),
                                             Text(
                                               widget.couponNewsList[index].storeId,
                                               style: TextStyle(
                                                 fontWeight: FontWeight.w500,
-                                                fontSize: 14.sp,
+                                                fontSize: min(14.h, 14.sp),
                                                 fontFamily: "Pretendard",
                                                 color: Color(0xFF5EF3D5),
                                               ),
@@ -251,11 +254,28 @@ class _couponNewsListViewState extends State<CouponNewsListView> {
                                         bottomRight:
                                         Radius.circular(20), // 좌측만 둥글게
                                       )),
-                                  child: Icon(
-                                    Icons.file_download,
-                                    color: Colors.white,
-                                    size: 35.sp,
-                                  ),
+                                    child: Column(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      crossAxisAlignment: CrossAxisAlignment.center,
+                                      children: [
+                                        Icon(
+                                          Icons.file_download,
+                                          color: Colors.white,
+                                          size: min(30.h, 30.sp),
+                                        ),
+                                        SizedBox(height: 3.h),
+                                        Text(
+                                          '000개 남음',
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.w500,
+                                            fontSize: min(10.h, 10.sp),
+                                            fontFamily: "Pretendard",
+                                            color: Colors.white,
+                                          ),
+                                          textAlign: TextAlign.center,
+                                        )
+                                      ],
+                                    )
                                 ),
                               ),
                             ),
@@ -265,7 +285,9 @@ class _couponNewsListViewState extends State<CouponNewsListView> {
                   ],
                 ),
               ) :
-              Padding(
+              Container(
+                color: Colors.white,
+                height: 335.h,
                 padding: EdgeInsets.only(left: 20.w, right: 20.w, top:20.h, bottom: 20.h),
                 child : GestureDetector(
                   onTap: () {
@@ -280,7 +302,7 @@ class _couponNewsListViewState extends State<CouponNewsListView> {
                       // 가게명, 업종 표출
                       Container(
                         width: 360.w,
-                        height: 60.h,
+                        height: 50.h,
                         child: Row(
                           children: [
                             //가게사진
@@ -290,10 +312,10 @@ class _couponNewsListViewState extends State<CouponNewsListView> {
                               },
                               child: ClipOval(
                                 child: Image.network(
-                                  'https://cdn.pixabay.com/photo/2024/04/01/05/18/green-8667981_1280.jpg',
+                                  'https://cdn.pixabay.com/photo/2024/03/14/08/52/pug-8632718_1280.jpg',
                                   fit: BoxFit.cover,
-                                  width: 40.w,
-                                  height: 40.h,
+                                  width: min(40.w, 40.h),
+                                  height: min(40.w, 40.h),
                                 ),
                               ),
                             ),
@@ -309,7 +331,7 @@ class _couponNewsListViewState extends State<CouponNewsListView> {
                                     widget.couponNewsList[index].storeId,
                                     style: TextStyle(
                                       fontWeight: FontWeight.w800,
-                                      fontSize: 18.sp,
+                                      fontSize: min(18.h, 18.sp),
                                       fontFamily: "Pretendard",
                                     ),
                                   ),
@@ -320,7 +342,7 @@ class _couponNewsListViewState extends State<CouponNewsListView> {
                                     widget.couponNewsList[index].storeId,
                                     style: TextStyle(
                                       fontWeight: FontWeight.w500,
-                                      fontSize: 14.sp,
+                                      fontSize: min(14.h, 14.sp),
                                       fontFamily: "Pretendard",
                                     ),
                                   ),
@@ -332,7 +354,7 @@ class _couponNewsListViewState extends State<CouponNewsListView> {
                       ),
 
                       // 가게 대표 사진
-                      SizedBox(height: 20.h),
+                      SizedBox(height: 18.h),
                       ClipRRect(
                         borderRadius: BorderRadius.circular(15.0),
                         child: Image.network(
@@ -352,7 +374,7 @@ class _couponNewsListViewState extends State<CouponNewsListView> {
                             widget.couponNewsList[index].createdDate,
                             style: TextStyle(
                               fontWeight: FontWeight.w500,
-                              fontSize: 14.sp,
+                              fontSize: min(14.h, 14.sp),
                               fontFamily: "Pretendard",
                               color: Color(0xFF999999),
                             ),
@@ -374,7 +396,7 @@ class _couponNewsListViewState extends State<CouponNewsListView> {
                                 //'소식　${widget.storeList[index].newsNumber}개',
                                 style: TextStyle(
                                   fontWeight: FontWeight.w800,
-                                  fontSize: 12.sp,
+                                  fontSize: min(12.h, 12.sp),
                                   fontFamily: "Pretendard",
                                   color: Color(0xFF5EF3D5),
                                 ),
@@ -389,15 +411,16 @@ class _couponNewsListViewState extends State<CouponNewsListView> {
                       Container(
                         alignment: Alignment.centerLeft,
                         child: Text(
-                          '모든 제품을 사장님이 직접 각국에서 소싱해 오셔서 최신 트랜드를 느끼실 수 있습니다.',
+                          '모든 제품을 사장님이 직접 각국에서 소싱해 오셔서 최신 트랜드를 느끼실 수 있습니다. 모든 제품을 사장님이 직접 각국에서 소싱해 오셔서 최신 트랜드를 느끼실 수 있습니다.',
                           //widget.newsList[index].newsDetail,
                           style: TextStyle(
                             fontWeight: FontWeight.w500,
-                            fontSize: 16.sp,
+                            fontSize: min(16.h, 16.sp),
                             fontFamily: "Pretendard",
                             color: Colors.black,
                           ),
                           maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
                         ),
                       ),
                     ],
@@ -405,11 +428,7 @@ class _couponNewsListViewState extends State<CouponNewsListView> {
                 ),
               ),
 
-              Container(
-                width: 360.w,
-                height: 10.h,
-                color: Color(0xFFF5F5F5),
-              )
+              SizedBox(height: 10.h)
             ],
           );
         },

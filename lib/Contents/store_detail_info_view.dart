@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -5,6 +7,7 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_naver_map/flutter_naver_map.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:local_news_coupon_finder/Contents/photo_list_view.dart';
 import 'package:local_news_coupon_finder/Contents/photo_slide_view.dart';
 
 import '../Datas/models.dart';
@@ -21,13 +24,13 @@ class StoreDetailInfoView extends StatefulWidget {
 class _storeDetailInfoViewState extends State<StoreDetailInfoView> {
   bool isScheduleList = false;
   bool isMenuList = false;
-  bool isMenuPhoto = false;
   bool isStorePhoto = false;
 
   double totalHeight = 0;
 
   List<Schedule> scheduleList = [];
   List<Menu> menuList = [];
+  List<String> photoList = [];
 
   @override
   void initState(){
@@ -45,7 +48,14 @@ class _storeDetailInfoViewState extends State<StoreDetailInfoView> {
       menuList.addAll(widget.store.storeDetail.menuList);
     }
 
-    isMenuPhoto = true;
+    photoList = ['https://cdn.pixabay.com/photo/2013/08/10/18/13/candies-171342_1280.jpg',
+      'https://cdn.pixabay.com/photo/2013/08/10/18/13/candies-171342_1280.jpg',
+      'https://cdn.pixabay.com/photo/2013/08/10/18/13/candies-171342_1280.jpg',
+      'https://cdn.pixabay.com/photo/2013/08/10/18/13/candies-171342_1280.jpg',
+      'https://cdn.pixabay.com/photo/2013/08/10/18/13/candies-171342_1280.jpg',
+      'https://cdn.pixabay.com/photo/2013/08/10/18/13/candies-171342_1280.jpg',
+      'https://cdn.pixabay.com/photo/2013/08/10/18/13/candies-171342_1280.jpg',
+      'https://cdn.pixabay.com/photo/2013/08/10/18/13/candies-171342_1280.jpg'];
     isStorePhoto = true;
 
     setState(() {});
@@ -55,20 +65,19 @@ class _storeDetailInfoViewState extends State<StoreDetailInfoView> {
     double height = 0;
 
     if(isScheduleList){
-      height = height + (27 * scheduleList.length) + 320;
+      height = height + (25 * scheduleList.length) + 290;
     } else {
-      height = height + 270;
+      height = height + 260;
     }
     if(isMenuList){
-      height = height + (27 * menuList.length) + 80 + 10;
-    }
-    if(isMenuPhoto){
-      height = height + 205 + 10;
+      height = height + (25 * menuList.length) + 70;
+      height = height + 15;
     }
     if(isStorePhoto){
-      height = height + 205;
+      height = height + max(220.h, 220.w) + 100.h;
+      height = height + 15;
     }
-    totalHeight = height + 40;
+    totalHeight = height + 70.h;
     print(totalHeight);
   }
 
@@ -93,35 +102,37 @@ class _storeDetailInfoViewState extends State<StoreDetailInfoView> {
           Container(
             padding: EdgeInsets.only(left: 20.w, right: 20.w, top: 20.h, bottom: 20.h),
             width: 360.w,
-            height: isScheduleList? ((25*scheduleList.length) + 320).h : 270.h,
+            height: isScheduleList? ((25*scheduleList.length) + 290).h : 260.h,
             child: Column(
               children: [
+
                 // 운영시간
                 Visibility(
                   visible: isScheduleList,
                   child: Column(
                     children: [
+
                       Row(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           Icon(
                             Icons.access_time,
-                            size: 16.sp,
+                            size: min(16.sp, 16.h),
                           ),
                           SizedBox(width: 10.w),
                           Text(
                             '운영시간',
                             style: TextStyle(
                               fontFamily: "Pretendard",
-                              fontSize: 14.sp,
+                              fontSize: min(16.sp, 16.h),
                               fontWeight: FontWeight.w800,
                             ),
                           ),
                         ],
                       ),
 
-                      SizedBox(height : 15.h),
+                      SizedBox(height : 10.h),
 
                       Container(
                         child: ListView.builder(
@@ -137,7 +148,7 @@ class _storeDetailInfoViewState extends State<StoreDetailInfoView> {
                                     '${schedule.day}　:　${schedule.time}',
                                     style: TextStyle(
                                       fontFamily: "Pretendard",
-                                      fontSize: 14.sp,
+                                      fontSize: min(14.sp, 14.h),
                                       fontWeight: FontWeight.w500,
                                     ),
                                   ),
@@ -147,44 +158,44 @@ class _storeDetailInfoViewState extends State<StoreDetailInfoView> {
                           },
                         ),
                       ),
-                      
-                      SizedBox(height: 21.h),
                     ],
                   ),
                 ),
 
+                isScheduleList? SizedBox(height: 20.h) : SizedBox(),
+
                 // 상점주소
                 Container(
                   child : Column(
-                    children: [
+                    children:[
                       Row(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           Icon(
                             Icons.map_outlined,
-                            size: 16.sp,
+                            size: min(16.sp, 16.h),
                           ),
                           SizedBox(width: 10.w),
                           Text(
                             '상점위치',
                             style: TextStyle(
                               fontFamily: "Pretendard",
-                              fontSize: 14.sp,
+                              fontSize: min(16.sp, 16.h),
                               fontWeight: FontWeight.w800,
                             ),
                           ),
                         ],
                       ),
 
-                      SizedBox(height : 15.h),
+                      SizedBox(height : 10.h),
                       Container(
                         padding: EdgeInsets.only(left: 25.w),
                         child : Text(
                           '서울 성북구 보국문로 81-1 1층',
                           style: TextStyle(
                             fontFamily: "Pretendard",
-                            fontSize: 14.sp,
+                            fontSize: min(14.sp, 14.h),
                             fontWeight: FontWeight.w500,
                           ),
                         ),
@@ -211,21 +222,26 @@ class _storeDetailInfoViewState extends State<StoreDetailInfoView> {
                     ],
                   ),
                 ),
+
+
               ],
             ),
           ),
 
+
+          // 구분선
           isMenuList? Container(
-              width: 360.w,
-              height: 10.h,
-              color: Color(0xFFF5F5F5)
-          ): SizedBox(height: 0),
+            color: Color(0xFFF5F5F5),
+            height: 15.h,
+          ) : SizedBox(),
+
 
           // 메뉴목록
           Container(
             padding: EdgeInsets.only(left: 20.w, right: 20.w, top: 20.h, bottom: 20.h),
             width: 360.w,
-            height: isMenuList? ((27 * menuList.length) + 80).h : 0,
+            height: isMenuList? ((25 * menuList.length) + 70).h : 0,
+            color: Colors.red,
             child: Column(
               children: [
                 Visibility(
@@ -238,21 +254,21 @@ class _storeDetailInfoViewState extends State<StoreDetailInfoView> {
                         children: [
                           Icon(
                             Icons.menu_book_rounded,
-                            size: 16.sp,
+                            size: min(16.sp, 16.h),
                           ),
                           SizedBox(width: 10.w),
                           Text(
-                            '상품목록',
+                            '상품정보',
                             style: TextStyle(
                               fontFamily: "Pretendard",
-                              fontSize: 14.sp,
+                              fontSize: min(16.sp, 16.h),
                               fontWeight: FontWeight.w800,
                             ),
                           ),
                         ],
                       ),
 
-                      SizedBox(height : 15.h),
+                      SizedBox(height : 10.h),
 
                       Container(
                         padding: EdgeInsets.only(left : 25.w),
@@ -268,7 +284,7 @@ class _storeDetailInfoViewState extends State<StoreDetailInfoView> {
                                     '${menu.menuName}　:　${menu.menuPrice}',
                                     style: TextStyle(
                                       fontFamily: "Pretendard",
-                                      fontSize: 14.sp,
+                                      fontSize: min(14.sp, 14.h),
                                       fontWeight: FontWeight.w500,
                                   ),
                                   ),
@@ -285,94 +301,18 @@ class _storeDetailInfoViewState extends State<StoreDetailInfoView> {
             )
           ),
 
-          isMenuPhoto? Container(
-            width: 360.w,
-            height: 10.h,
-            color: Color(0xFFF5F5F5),
-          ) : SizedBox(height: 0),
-
-          // 메뉴사진
-          Container(
-              padding: EdgeInsets.only(left: 20.w, right: 20.w, top: 20.h, bottom: 20.h),
-              width: 360.w,
-              height: isMenuPhoto? 205.h : 0,
-              child: Column(
-                children: [
-                  Visibility(
-                    visible: isMenuPhoto,
-                    child: Column(
-                      children: [
-                        Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Icon(
-                              Icons.list_alt_rounded,
-                              size: 16.sp,
-                            ),
-                            SizedBox(width: 10.w),
-                            Text(
-                              '상품사진',
-                              style: TextStyle(
-                                fontFamily: "Pretendard",
-                                fontSize: 14.sp,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ],
-                        ),
-
-                        Container(
-                          height: 140.h,
-                          child: ListView.builder(
-                            scrollDirection: Axis.horizontal,
-                            itemCount: 5,
-                            itemBuilder: (context, index) {
-                              return Padding(
-                                padding: EdgeInsets.only(left : 10.w, right: 10.w, top: 20.h, bottom: 20.h),
-                                child : GestureDetector(
-                                  onTap: () {
-                                    // 사진 클릭 시 팝업을 띄웁니다.
-                                    showDialog(
-                                      context: context,
-                                      builder: (context) => PhotoSlideView(
-                                        imageUrl:
-                                        'https://cdn.pixabay.com/photo/2013/08/10/18/13/candies-171342_1280.jpg',
-                                      ),
-                                    );
-                                  },
-                                  child: ClipRRect(
-                                    borderRadius: BorderRadius.circular(5),
-                                    child: Image.network(
-                                      'https://cdn.pixabay.com/photo/2013/08/10/18/13/candies-171342_1280.jpg',
-                                      width: 100.w,
-                                      height: 100.h,
-                                      fit: BoxFit.cover,
-                                    ),
-                                  ),
-                                ),
-                              );
-                            },
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              )
-          ),
-
+          // 구분선
           isStorePhoto? Container(
-            width: 360.w,
-            height: 10.h,
             color: Color(0xFFF5F5F5),
-          ) : SizedBox(height: 0),
+            height: 15.h,
+          ) : SizedBox(),
 
-          // 상점사진
+          // 사진목록
           Container(
               padding: EdgeInsets.only(left: 20.w, right: 20.w, top: 20.h, bottom: 20.h),
               width: 360.w,
-              height: isStorePhoto? 205.h : 0,
+              height: isStorePhoto? max(220.h, 220.w) + 100.h : 0,
+              color: Colors.blueGrey,
               child: Column(
                 children: [
                   Visibility(
@@ -384,59 +324,29 @@ class _storeDetailInfoViewState extends State<StoreDetailInfoView> {
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                             Icon(
-                              Icons.storefront,
-                              size: 16.sp,
+                              Icons.photo_album_outlined,
+                              size: min(16.sp, 16.h),
                             ),
                             SizedBox(width: 10.w),
                             Text(
                               '상점사진',
                               style: TextStyle(
                                 fontFamily: "Pretendard",
-                                fontSize: 14.sp,
-                                fontWeight: FontWeight.bold,
+                                fontSize: min(16.sp, 16.h),
+                                fontWeight: FontWeight.w800,
                               ),
                             ),
                           ],
                         ),
 
-                        Container(
-                          height: 140.0.h,
-                          child: ListView.builder(
-                            scrollDirection: Axis.horizontal,
-                            itemCount: 5,
-                            itemBuilder: (context, index) {
-                              return Padding(
-                                padding: EdgeInsets.only(left : 10.w, right: 10.w, top: 20.h, bottom: 20.h),
-                                child : GestureDetector(
-                                  onTap: () {
-                                    // 사진 클릭 시 팝업을 띄웁니다.
-                                    showDialog(
-                                      context: context,
-                                      builder: (context) => PhotoSlideView(
-                                        imageUrl:
-                                        'https://cdn.pixabay.com/photo/2013/08/10/18/13/candies-171342_1280.jpg',
-                                      ),
-                                    );
-                                  },
-                                  child: ClipRRect(
-                                    borderRadius: BorderRadius.circular(5),
-                                    child: Image.network(
-                                      'https://cdn.pixabay.com/photo/2013/08/10/18/13/candies-171342_1280.jpg',
-                                      width: 100.w,
-                                      height: 100.h,
-                                      fit: BoxFit.cover,
-                                    ),
-                                  ),
-                                ),
-                              );
-                            },
-                          ),
-                        ),
+                        SizedBox(height : 10.h),
+
+                        PhotoListView(imageUrls: photoList),
                       ],
-                    ),
+                    )
                   ),
                 ],
-              )
+              ),
           ),
         ],
       ),

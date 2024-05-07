@@ -1,3 +1,4 @@
+import 'dart:math';
 import 'dart:typed_data';
 
 import 'package:auto_size_text/auto_size_text.dart';
@@ -20,38 +21,49 @@ class _joinTermsState extends State<JoinTerms> {
 
     return SafeArea(
       child: Scaffold(
-        appBar: AppBar(
-          toolbarHeight: 52.h,
-          bottomOpacity : 0.0,
-          backgroundColor: Colors.white,
-          flexibleSpace: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Container(
-                color: Colors.white,
-                alignment: Alignment.centerLeft,
-                width: 300.w,
-                height: 50.h,
-                child: Row(
-                  children: [
-                    SizedBox(width: 25.w),
-                    Text(
-                      '약관동의',
-                      style: TextStyle(
-                          fontWeight: FontWeight.w800,
-                          fontSize: 16.sp,
-                          fontFamily: "Pretendard"
+        appBar: PreferredSize(
+          preferredSize: Size(360.w, 50.h),
+          child: AppBar(
+            toolbarHeight: 50.h,
+            backgroundColor: Colors.red,
+            leading: IconButton(
+              icon: Icon(
+                Icons.arrow_back_ios_new_outlined,
+                size: min(16.h, 16.sp),
+              ),
+              onPressed: () {
+                Navigator.pop(context); // 이전 화면으로 돌아가기
+              },
+            ),
+            flexibleSpace: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Container(
+                  color: Colors.white,
+                  alignment: Alignment.centerLeft,
+                  width: 360.w,
+                  height: 49.h,
+                  child: Row(
+                    children: [
+                      SizedBox(width: 50.w),
+                      Text(
+                        "약관동의",
+                        style: TextStyle(
+                            fontWeight: FontWeight.w800,
+                            fontSize: min(16.h, 16.sp),
+                            fontFamily: "Pretendard"
+                        ),
+                        textAlign: TextAlign.left,
                       ),
-                      textAlign: TextAlign.left,
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-              ),
-              Container(
-                height: 1, // 회색 줄의 높이
-                color: Color(0xFFF5F5F5), // 회색 줄의 색상
-              ),
-            ],
+                Container(
+                  height: 1.h, // 회색 줄의 높이
+                  color: Color(0xFFF5F5F5), // 회색 줄의 색상
+                ),
+              ],
+            ),
           ),
         ),
         body: Column(
@@ -69,7 +81,7 @@ class _joinTermsState extends State<JoinTerms> {
                     '서비스 이용을 위해',
                     style: TextStyle(
                         fontWeight: FontWeight.w800,
-                        fontSize: 20.sp,
+                        fontSize: min(18.sp, 18.h),
                         fontFamily: "Pretendard"
                     ),
                     textAlign: TextAlign.left,
@@ -79,7 +91,7 @@ class _joinTermsState extends State<JoinTerms> {
                     '약관에 동의해 주세요.',
                     style: TextStyle(
                         fontWeight: FontWeight.w800,
-                        fontSize: 20.sp,
+                        fontSize: min(18.sp, 18.h),
                         fontFamily: "Pretendard"
                     ),
                     textAlign: TextAlign.left,
@@ -104,7 +116,7 @@ class _joinTermsState extends State<JoinTerms> {
                       style: TextStyle(
                           fontWeight: FontWeight.w500,
                           color: Colors.black,
-                          fontSize: 16.sp,
+                          fontSize: min(16.sp, 16.h),
                           fontFamily: "Pretendard"
                       ),
                       textAlign: TextAlign.left,
@@ -135,7 +147,7 @@ class _joinTermsState extends State<JoinTerms> {
                                 style: TextStyle(
                                   fontWeight: FontWeight.w500,
                                   color: Colors.black,
-                                  fontSize: 16.0.sp,
+                                  fontSize: min(16.sp, 16.h),
                                   fontFamily: "Pretendard",
                                 ),
                               ),
@@ -149,7 +161,7 @@ class _joinTermsState extends State<JoinTerms> {
                                   style: TextStyle(
                                     fontWeight: FontWeight.w500,
                                     color: Colors.blueAccent,
-                                    fontSize: 14.0.sp,
+                                    fontSize: min(14.sp, 14.h),
                                     fontFamily: "Pretendard",
                                   ),
                                 ),
@@ -197,7 +209,7 @@ class _joinTermsState extends State<JoinTerms> {
                       style: TextStyle(
                           fontWeight: FontWeight.w800,
                           color: Color(0xFF666666),
-                          fontSize: 18.spMin,
+                          fontSize: min(16.sp, 16.h),
                           fontFamily: "Pretendard"
                       ),
                       textAlign: TextAlign.center,

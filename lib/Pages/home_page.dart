@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -173,14 +175,7 @@ class _HomePageStatus extends State<HomePage> {
 
 
   Widget _buildHomeWidget() {
-    return Scaffold(
-      appBar: AppBar(
-        bottomOpacity : 0.0,
-        backgroundColor: Colors.white,
-        toolbarHeight: 50.h,
-        flexibleSpace : LocationSearchBar(onLocationChanged: _handleLocationChange),
-      ),
-      body: SingleChildScrollView(
+    return SingleChildScrollView(
         reverse: false,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -205,11 +200,11 @@ class _HomePageStatus extends State<HomePage> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       SizedBox(width: 21.w),
-                      AutoSizeText(
+                      Text(
                         '최근 등록된 동네소식',
                         style: TextStyle(
                             fontFamily: "Pretendard",
-                            fontSize: 20.sp,
+                            fontSize: min(20.h, 20.sp),
                             fontWeight: FontWeight.w800,
                             color: Colors.black
                         ),
@@ -226,17 +221,15 @@ class _HomePageStatus extends State<HomePage> {
             ) : SizedBox(height:0),
 
 
-
-
             _latestCoupons.isNotEmpty?Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Container(
-                  height: 10.0.h,
+                  height: 10.h,
                   color: Color(0xffededed),
                 ),
 
-                SizedBox(height: 28.h),
+                SizedBox(height: 29.h),
 
                 // 최근 등록된 쿠폰
                 Container(
@@ -245,11 +238,11 @@ class _HomePageStatus extends State<HomePage> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       SizedBox(width: 21.w),
-                      AutoSizeText(
+                      Text(
                         '새로 등록된 쿠폰',
                         style: TextStyle(
                             fontFamily: "Pretendard",
-                            fontSize: 22.sp,
+                            fontSize: min(20.h, 20.sp),
                             fontWeight: FontWeight.w800,
                             color: Colors.black
                         ),
@@ -270,7 +263,7 @@ class _HomePageStatus extends State<HomePage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Container(
-                  height: 10.0.h,
+                  height: 10.h,
                   color: Color(0xffededed),
                 ),
 
@@ -283,11 +276,11 @@ class _HomePageStatus extends State<HomePage> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       SizedBox(width: 21.w),
-                      AutoSizeText(
+                      Text(
                         '최근 등록된 상점',
                         style: TextStyle(
                             fontFamily: "Pretendard",
-                            fontSize: 22.sp,
+                            fontSize: min(20.h, 20.sp),
                             fontWeight: FontWeight.w800,
                             color: Colors.black
                         ),
@@ -312,13 +305,12 @@ class _HomePageStatus extends State<HomePage> {
                 height: 70.h,
                 child: Image.asset(
                   'assets/images/event/contact.png',
-                  fit: BoxFit.fitWidth,
+                  fit: BoxFit.fill,
                 ),
               ),
             ),
           ],
         ),
-      ),
-    );
+      );
   }
 }

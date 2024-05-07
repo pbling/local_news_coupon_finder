@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../Navigation/navigation.dart';
+import '../Pages/test_page.dart';
 
 class SplashScreen extends StatelessWidget {
 
@@ -18,7 +18,7 @@ class SplashScreen extends StatelessWidget {
             child: Image.asset('assets/images/icon/logo.png'),
           ),
         ),
-        nextScreen: Navigation(),
+        nextScreen: MyHomePage(),
         splashTransition: SplashTransition.fadeTransition,
         duration: 500,
       ),

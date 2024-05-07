@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -36,7 +38,7 @@ class _couponSlideViewState extends State<CouponSlideView>  {
     final itemCount = widget.couponList.length >= 5 ? 5 : widget.couponList.length;
 
     return Container(
-      height: 157.h,
+      height: 150.h,
       child: SingleChildScrollView(
         physics: PageScrollPhysics(),
         scrollDirection: Axis.horizontal,
@@ -44,10 +46,10 @@ class _couponSlideViewState extends State<CouponSlideView>  {
           children: List.generate(itemCount, (index) {
             final coupon = widget.couponList[index];
             return Padding(
-              padding: EdgeInsets.only(left: 20.w, right: 7.5.w, top : 20.h, bottom: 20.h),
+              padding: EdgeInsets.only(left: 20.w, right: 10.w, top : 20.h, bottom: 20.h),
               child: Container(
                 width: 230.w,
-                height: 116.h,
+                height: 110.h,
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(15),
@@ -69,7 +71,7 @@ class _couponSlideViewState extends State<CouponSlideView>  {
                               coupon.couponDetail,
                               style: TextStyle(
                                 fontWeight: FontWeight.w800,
-                                fontSize: 14.0.sp,
+                                fontSize: min(14.h, 14.sp),
                                 fontFamily: "Pretendard",
                               ),
                               maxLines: 1,
@@ -79,10 +81,10 @@ class _couponSlideViewState extends State<CouponSlideView>  {
                               height: 4.h,
                             ),
                             Text(
-                              '${DateFormat('yy.MM.dd').format(coupon.startDate)} ~ ${DateFormat('yy.MM.dd').format(coupon.endDate)}',
+                              '${DateFormat('yyyy.MM.dd').format(coupon.startDate)}~${DateFormat('MM.dd').format(coupon.endDate)}',
                               style: TextStyle(
                                 fontWeight: FontWeight.w500,
-                                fontSize: 12.sp,
+                                fontSize: min(12.h, 12.sp),
                                 fontFamily: "Pretendard",
                                 color: Color(0xFF999999),
                               ),
@@ -92,20 +94,17 @@ class _couponSlideViewState extends State<CouponSlideView>  {
                             ),
                             Row(
                               children: [
-                                Image.asset(
-                                  'assets/images/icon/place.png',
-                                  width: 11.2.w,
-                                  height: 14.h,
-                                  fit: BoxFit.fitHeight,
+                                Icon(
+                                  Icons.storefront,
+                                  size: min(14.sp, 14.h),
+                                  color: Color(0xFF5EF3D5),
                                 ),
-                                SizedBox(
-                                  width: 6.12.w,
-                                ),
+                                SizedBox(width: 4.03.w),
                                 Text(
                                   coupon.storeId,
                                   style: TextStyle(
                                     fontWeight: FontWeight.w500,
-                                    fontSize: 14.sp,
+                                    fontSize: min(14.h, 14.sp),
                                     fontFamily: "Pretendard",
                                     color: Color(0xFF5EF3D5),
                                   ),
@@ -139,11 +138,28 @@ class _couponSlideViewState extends State<CouponSlideView>  {
                               bottomRight: Radius.circular(15),
                             ),
                           ),
-                          child: Icon(
-                            Icons.file_download,
-                            color: Colors.white,
-                            size: 20.sp,
-                          ),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Icon(
+                                  Icons.file_download,
+                                  color: Colors.white,
+                                  size: min(30.h, 30.sp),
+                                ),
+                                SizedBox(height: 3.h),
+                                Text(
+                                  '000개\n남음',
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: min(10.h, 10.sp),
+                                    fontFamily: "Pretendard",
+                                    color: Colors.white,
+                                  ),
+                                  textAlign: TextAlign.center,
+                                )
+                              ],
+                            )
                         ),
                       ),
                     ),

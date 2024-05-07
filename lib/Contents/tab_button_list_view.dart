@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:auto_size_text/auto_size_text.dart';
@@ -47,7 +49,7 @@ class _tabButtonListViewState extends State<TabButtonListView> {
                 },
                 child: Container(
                   margin: EdgeInsets.only(right : 7.w),
-                  padding: EdgeInsets.only(left:20.w, right:20.w,top: 6.h, bottom: 6.h),
+                  padding: EdgeInsets.only(left:21.w, right:21.w,top: 7.h, bottom: 7.h),
 
                   decoration: BoxDecoration(
                     color: index == _selectedTabIndex ? Color(0xFF191919) : Color(0xFFF8F8F8),
@@ -64,7 +66,7 @@ class _tabButtonListViewState extends State<TabButtonListView> {
                         color: index == _selectedTabIndex ? Colors.white : Color(0xFF666666),
                         fontWeight: FontWeight.w500,
                         fontFamily: "Pretendard",
-                        fontSize: 14.sp,
+                        fontSize: min(14.h, 14.sp),
                       ),
                     ),
                   ),
