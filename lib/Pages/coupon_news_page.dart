@@ -379,7 +379,7 @@ class _CouponNewsPageState extends State<CouponNewsPage> {
           ),
           elevation: isSelected ? 3 : 0,
           // 클릭된 버튼일 경우 그림자 효과
-          padding: EdgeInsets.symmetric(vertical: 14.h, horizontal: 12.w),
+          padding: EdgeInsets.symmetric(vertical: 12.h, horizontal: 12.w),
         ),
         child: Row(
           children: [

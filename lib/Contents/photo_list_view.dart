@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:photo_view/photo_view.dart';
 import 'full_photo_list_view.dart';
@@ -42,7 +43,6 @@ class _PhotoListViewState extends State<PhotoListView> {
 
   Widget _buildImageGrid(bool showMore) {
     return Container(
-      color: Colors.red,
       height: max(220.w, 220.h),
       child: GridView.builder(
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
@@ -79,19 +79,31 @@ class _PhotoListViewState extends State<PhotoListView> {
       onTap: () => Navigator.push(context, MaterialPageRoute(
         builder: (context) => FullPhotoListView(imageUrls: widget.imageUrls),
       )),
-      child: Container(
-        color: Colors.grey,
-        child: Center(
-          child: Text(
+      child: Stack(
+        children: [
+          Container(
+            width: double.infinity,
+            height: double.infinity,
+            child : ColorFiltered(
+              colorFilter: ColorFilter.mode(
+                  Colors.black.withOpacity(0.5),
+                  BlendMode.srcATop
+              ),
+              child: Image.network(widget.imageUrls[5], fit: BoxFit.cover),
+            )
+          ),
+          Center(
+            child: Text(
               '더보기 + $extraImageCount',
               style: TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.w500,
-                fontSize: min(16.sp, 16.h),
-                fontFamily: "Pretendard"
+                  color: Colors.white,
+                  fontWeight: FontWeight.w800,
+                  fontSize: min(14.sp, 14.h),
+                  fontFamily: "Pretendard"
               ),
+            ),
           ),
-        ),
+        ],
       ),
     );
   }

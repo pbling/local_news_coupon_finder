@@ -7,83 +7,82 @@ class CategoryNewService {
   CategoryNewService._internal();
 
   Future<List<Category>> getAllCategories() async {
-    // 2s 뒤에 데이터 반환
     return [
-      Category(
-          categoryName: '레스토랑',
-          iconUrl: 'assets/images/category/food.jpg',
-          simpleSearch: true,
-          subCategoryName: ['한식', '중식', '양식', '아시안', '분식', '치킨', '해산물', '패스트푸드', '술집', '도시락', '기타']),
-      Category(
-          categoryName: '카페',
-          iconUrl: 'assets/images/category/cafe.png',
-          simpleSearch: true,
-          subCategoryName: ['카페', '베이커리', '떡', '키즈카페', '애견카페', '스터디카페', '기타']),
-      Category(
-          categoryName: '식료품',
-          iconUrl: 'assets/images/category/market.png',
-          simpleSearch: false,
-          subCategoryName: ['대형마트','편의점', '야채', '과일', '반찬', '정육점', '유기농', '건강식품', '기타']),
       Category(
           categoryName: '상점',
           iconUrl: 'assets/images/category/store.png',
           simpleSearch: true,
-          subCategoryName: ['의류/신발', '가전/가구', '화장품', '도서', '육아', '인테리어', '꽃', '세탁소', '기타']),
+          subCategoryName: ['가전/가구', '간판', '귀금속', '꽃집', '도장', '떡집', '반찬', '기타']),
+      Category(
+          categoryName: '음식점',
+          iconUrl: 'assets/images/category/food.jpg',
+          simpleSearch: true,
+          subCategoryName: ['한식', '중식', '일식', '양식', '분식', '횟집', '치킨', '패스트푸드', '술집', '기타']),
+      Category(
+          categoryName: '카페',
+          iconUrl: 'assets/images/category/cafe.png',
+          simpleSearch: true,
+          subCategoryName: ['커피/음료', '베이커리', '키즈카페', '스터디카페', '애견카페', '기타']),
+      Category(
+          categoryName: '식료품',
+          iconUrl: 'assets/images/category/market.png',
+          simpleSearch: false,
+          subCategoryName: ['마트/편의점', '야채/과일', '정육점', '유기농', '농수산물', '건강식품', '기타']),
+      Category(
+          categoryName: '병원·약국',
+          iconUrl: 'assets/images/category/care.png',
+          simpleSearch: true,
+          subCategoryName:  ['재활·통증', '내과', '외과', '비뇨기과', '산부인과', '치과', '안과', '한의원', '약국', '기타']),
       Category(
           categoryName: '뷰티',
           iconUrl: 'assets/images/category/beauty.png',
           simpleSearch: false,
-          subCategoryName: ['미용실', '네일', '속눈썹', '피부관리', '마사지', '메이크업', '기타']),
-      Category(
-          categoryName: '병원/약국',
-          iconUrl: 'assets/images/category/care.png',
-          simpleSearch: true,
-          subCategoryName:  ['약국', '피부과', '성형외과', '내과', '치과', '안과', '비뇨기과', '산부인과', '기타']),
-      Category(
-          categoryName: '서비스',
-          iconUrl: 'assets/images/category/service.png',
-          simpleSearch: true,
-          subCategoryName: ['인테리어', '수리/설치', '이사/용달', '부동산', '위생관리', '노래방', '기타']),
+          subCategoryName: ['미용실', '네일', '속눈썹', '피부관리', '마사지', '메이크업', '두피·탈모', '기타']),
       Category(
           categoryName: '운동',
           iconUrl: 'assets/images/category/fitness.png',
           simpleSearch: true,
-          subCategoryName:  ['헬스장', '필라테스/요가', '태권도', '리듬체조/발레', '축구', '골프', '수영', '기타']),
+          subCategoryName:  ['헬스장', '필라테스·요가', '태권도', '리듬체조·발레', '축구', '골프', '수영', '기타']),
       Category(
-          categoryName: '아이교육',
+          categoryName: '학원·교육',
           iconUrl: 'assets/images/category/education.png',
           simpleSearch: false,
-          subCategoryName: ['종합학원', '외국어', '수학', '과학', '국어/논술', '예체능', '어린이집', '유치원', '기타']),
+          subCategoryName: ['종합학원', '외국어', '수학', '과학', '국어·논술', '예체능', '토플·토익', '기타']),
+      Category(
+          categoryName: '부동산',
+          iconUrl: 'assets/images/category/service.png',
+          simpleSearch: true,
+          subCategoryName: ['아파트/빌라', '상가/주택', '펜션/건물', '기타']),
+      Category(
+          categoryName: '이사·퀵',
+          iconUrl: 'assets/images/category/service.png',
+          simpleSearch: true,
+          subCategoryName: ['포장이사', '원룸이사', '용달·화물', '퀵서비스', '기타']),
+      Category(
+          categoryName: '인테리어',
+          iconUrl: 'assets/images/category/service.png',
+          simpleSearch: true,
+          subCategoryName: ['인테리어', '에어컨', '주택수리', '전기공사', '유리·샷시', '도배/장판', '욕조·타일', '보일러·설비', '블라인드·커텐', '철물점', '기타']),
+      Category(
+          categoryName: '숙박·여행',
+          iconUrl: 'assets/images/category/service.png',
+          simpleSearch: true,
+          subCategoryName: ['호텔·숙박', '렌트카', '골프장', '여행사', '투어버스', '기타']),
       Category(
           categoryName: '취미생활',
           iconUrl: 'assets/images/category/hobby.png',
           simpleSearch: true,
           subCategoryName:  ['악기', '보컬', '외국어', '미술', '요리', '댄스', '기타']),
       Category(
-          categoryName: '병원/약국',
-          iconUrl: 'assets/images/category/care.png',
-          simpleSearch: true,
-          subCategoryName:  ['약국', '피부과', '성형외과', '내과', '치과', '안과', '비뇨기과', '산부인과', '기타']),
-      Category(
-          categoryName: '서비스',
-          iconUrl: 'assets/images/category/service.png',
-          simpleSearch: true,
-          subCategoryName: ['인테리어', '수리/설치', '이사/용달', '부동산', '위생관리', '노래방', '기타']),
-      Category(
-          categoryName: '운동',
-          iconUrl: 'assets/images/category/fitness.png',
-          simpleSearch: true,
-          subCategoryName:  ['헬스장', '필라테스/요가', '태권도', '리듬체조/발레', '축구', '골프', '수영', '기타']),
-      Category(
-          categoryName: '아이교육',
-          iconUrl: 'assets/images/category/education.png',
-          simpleSearch: false,
-          subCategoryName: ['종합학원', '외국어', '수학', '과학', '국어/논술', '예체능', '어린이집', '유치원', '기타']),
-      Category(
-          categoryName: '취미생활',
+          categoryName: '반려동물',
           iconUrl: 'assets/images/category/hobby.png',
           simpleSearch: true,
-          subCategoryName:  ['악기', '보컬', '외국어', '미술', '요리', '댄스', '기타']),
+          subCategoryName:  ['동물병원', '애견분양', '장례식장', '애견호텔', '유치원', '기타']),
+      Category(
+          categoryName: '광고·인쇄',
+          iconUrl: 'assets/images/category/care.png',
+          simpleSearch: true,
+          subCategoryName:  ['버스광고', '지하철광고', '온라인광고', '인쇄', '판촉물', '현수막·배너', '기타']),
     ];
   }
 // (홈, 쿠폰/소식) 최신 소식 목록

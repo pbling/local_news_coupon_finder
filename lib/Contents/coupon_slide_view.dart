@@ -5,8 +5,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:local_news_coupon_finder/Login/select_login_option.dart';
 
 import '../Datas/models.dart';
+import '../Login/select_login_option_navi.dart';
 
 
 class CouponSlideView extends StatefulWidget {
@@ -21,10 +23,12 @@ class CouponSlideView extends StatefulWidget {
 class _couponSlideViewState extends State<CouponSlideView>  {
 
   late List<bool> isDownload;
+  late bool _isLoginedUser;
 
   @override
   void initState() {
     super.initState();
+    _checkLoginStatus();
     // 각 쿠폰에 대한 초기 클릭 상태 설정
     isDownload = List.generate(widget.couponList.length, (index) => false);
     for(var item in isDownload){
@@ -32,10 +36,95 @@ class _couponSlideViewState extends State<CouponSlideView>  {
     }
   }
 
+  // 로그인 여부 체크 ***
+  Future<void> _checkLoginStatus() async{
+    bool checkResult;
+    checkResult = false;
+
+    setState(() {
+      _isLoginedUser = checkResult;
+    });
+  }
+
+  // 로그인 다이얼로그
+  Future<void> _showLoginDialog() async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(15.0),
+          ),
+          backgroundColor: Colors.white,
+          title: Text(
+            '로그인이 필요합니다.',
+            style: TextStyle(
+                fontWeight: FontWeight.w800,
+                fontSize: min(14.h, 14.sp),
+                fontFamily: "Pretendard"
+            ),
+          ),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                Text(
+                  '저장 기능 사용을 위해서는 \n로그인이 필요합니다.',
+                  style: TextStyle(
+                      fontWeight: FontWeight.w500,
+                      fontSize: min(14.h, 14.sp),
+                      fontFamily: "Pretendard"
+                  ),
+                ),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: Text(
+                '취소',
+                style: TextStyle(
+                    fontWeight: FontWeight.w500,
+                    fontSize: min(14.h, 14.sp),
+                    fontFamily: "Pretendard"
+                ),
+              ),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            TextButton(
+              child: Text(
+                '로그인하러 가기',
+                style: TextStyle(
+                    fontWeight: FontWeight.w500,
+                    fontSize: min(14.h, 14.sp),
+                    fontFamily: "Pretendard"
+                ),
+              ),
+              onPressed: () async {
+                Navigator.of(context).pop();
+                // 위치정보 사용약관 페이지 이동
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => SelectLoginOptWithNavi(),
+                  ),
+                );
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+
   @override
   Widget build(BuildContext context) {
 
     final itemCount = widget.couponList.length >= 5 ? 5 : widget.couponList.length;
+    _checkLoginStatus();
 
     return Container(
       height: 150.h,
@@ -123,7 +212,8 @@ class _couponSlideViewState extends State<CouponSlideView>  {
                           // 터치 이벤트 처리
                           setState(() {
                             // 아이콘 클릭 상태 토글
-                            isDownload[index] = !isDownload[index];
+                            _isLoginedUser? isDownload[index] = !isDownload[index] : _showLoginDialog();
+
                           });
                           print('다운로드 아이콘 클릭');
                         } ,
@@ -136,6 +226,10 @@ class _couponSlideViewState extends State<CouponSlideView>  {
                               bottomLeft: Radius.circular(0),
                               topRight: Radius.circular(15),
                               bottomRight: Radius.circular(15),
+                            ),
+                            border: Border.all(
+                              color: isDownload[index]? Color(0xFFD4D4D8) : Color(0xFF5EF3D5),
+                              width: 1.0,
                             ),
                           ),
                             child: Column(

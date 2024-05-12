@@ -8,6 +8,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../Datas/models.dart';
+import '../Login/select_login_option_navi.dart';
 import '../Pages/store_detail_page.dart';
 
 class StoreListView extends StatefulWidget {
@@ -21,7 +22,119 @@ class StoreListView extends StatefulWidget {
 
 class _StoreListViewState extends State<StoreListView> {
 
-  bool isFavorite = false;
+  late bool _isLoginedUser;
+
+  @override
+  void initState() {
+    super.initState();
+    _checkLoginStatus();
+  }
+
+  // 로그인 여부 체크 ***
+  Future<void> _checkLoginStatus() async{
+    bool checkResult;
+    checkResult = false;
+
+    setState(() {
+      _isLoginedUser = checkResult;
+    });
+  }
+
+  // 로그인 다이얼로그
+  Future<void> _showLoginDialog() async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(15.0),
+          ),
+          backgroundColor: Colors.white,
+          title: Text(
+            '로그인이 필요합니다.',
+            style: TextStyle(
+                fontWeight: FontWeight.w800,
+                fontSize: min(14.h, 14.sp),
+                fontFamily: "Pretendard"
+            ),
+          ),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                Text(
+                  '저장 기능 사용을 위해서는 \n로그인이 필요합니다.',
+                  style: TextStyle(
+                      fontWeight: FontWeight.w500,
+                      fontSize: min(14.h, 14.sp),
+                      fontFamily: "Pretendard"
+                  ),
+                ),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: Text(
+                '취소',
+                style: TextStyle(
+                    fontWeight: FontWeight.w500,
+                    fontSize: min(14.h, 14.sp),
+                    fontFamily: "Pretendard"
+                ),
+              ),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            TextButton(
+              child: Text(
+                '로그인하러 가기',
+                style: TextStyle(
+                    fontWeight: FontWeight.w500,
+                    fontSize: min(14.h, 14.sp),
+                    fontFamily: "Pretendard"
+                ),
+              ),
+              onPressed: () async {
+                Navigator.of(context).pop();
+                // 위치정보 사용약관 페이지 이동
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => SelectLoginOptWithNavi(),
+                  ),
+                );
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+
+  bool checkPickStatus(Store store){
+    bool result = false;
+    if(store.isPicked == null || store.isPicked == false){
+      result = false;
+    } else {
+      result = true;
+    }
+    return result;
+  }
+
+  Future<void> _addFavoriteList(Store store) async
+  {
+    if(store.isPicked == false){
+      store.isPicked = true;
+    } else {
+      store.isPicked = false;
+    }
+    setState(() {
+    });
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -72,23 +185,22 @@ class _StoreListViewState extends State<StoreListView> {
                         right: 8,
                         child: GestureDetector(
                           onTap: () {
-                            setState(() {
-                            });
+                            _isLoginedUser? _addFavoriteList(widget.storeList[index]) : _showLoginDialog();
                             print('즐겨찾기 상점에 추가');
                           },
                           child: Container(
                             width: 40.w,
                             height: 40.h,
                             decoration: BoxDecoration(
-                              color: isFavorite ?
+                              color: checkPickStatus(widget.storeList[index]) ?
                               Colors.cyanAccent.withOpacity(0.5) : Colors.black.withOpacity(0.5),
                               shape: BoxShape.circle,
                             ),
                             child: Icon(
-                              isFavorite ?
+                              checkPickStatus(widget.storeList[index]) ?
                               Icons.favorite : Icons.favorite_border,
                               color: Colors.white,
-                              size: 24.w,
+                              size: min(24.sp, 24.h),
                             ),
                           ),
                         ),

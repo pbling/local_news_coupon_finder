@@ -206,9 +206,9 @@ class _TermsPageState extends State<TermsPage> {
                     child: ElevatedButton(
                       onPressed: _isAllChecked ? () {
                         print('약관동의 완료');
-
                         // 약관동의 완료 데이터 처리
 
+                        Navigator.pop(context);
                       } : null,
                       child: Text(
                         '완료',

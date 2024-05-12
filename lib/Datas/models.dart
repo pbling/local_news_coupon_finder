@@ -193,9 +193,12 @@ class Store {
   late PlacePos addressPos;
   late StoreDetail storeDetail;
   late DateTime createdDate;
-  late int favoriteNumber;
+  late int pickNumber;
   late int availableCouponNumber;
   late int newsNumber;
+  // pick 여부
+  late bool isPicked;
+
 
   Store({
     required this.storeId,
@@ -207,6 +210,7 @@ class Store {
     required this.addressPos,
     required this.storeDetail,
     required this.createdDate,
+    required this.isPicked,
     favoriteNumber = 0,
     availableCouponNumber = 0,
     newsNumber = 0,

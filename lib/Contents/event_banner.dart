@@ -24,7 +24,7 @@ class _EventBannerState extends State<EventBanner> {
 
     return Container(
       width: 360.w,
-      height: 140.h,
+      height: 150,
       child: Swiper(
         itemBuilder: (context, index) {
           final image = widget.eventList[index].eventBannerImage;

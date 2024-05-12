@@ -12,6 +12,7 @@ import '../Datas/models.dart';
 
 class CouponListView extends StatefulWidget {
   final List<Coupon> couponList;
+
   CouponListView({Key?key, required this.couponList}) : super(key:key);
 
   @override
@@ -226,10 +227,13 @@ class _couponListViewState extends State<CouponListView> {
                                           topLeft: Radius.circular(0),
                                           bottomLeft: Radius.circular(0),
                                           topRight: Radius.circular(20),
-                                          // 좌측만 둥글게
-                                          bottomRight:
-                                          Radius.circular(20), // 좌측만 둥글게
-                                        )),
+                                          bottomRight: Radius.circular(20),
+                                        ),
+                                      border: Border.all(
+                                        color: Color(0xFFD4D4D8),
+                                        width: 1.0,
+                                      ),
+                                    ),
                                     child: Column(
                                       mainAxisAlignment: MainAxisAlignment.center,
                                       crossAxisAlignment: CrossAxisAlignment.center,

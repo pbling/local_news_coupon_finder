@@ -31,6 +31,7 @@ import '../Datas/store_service_.dart';
 
 
 class HomePage extends StatefulWidget {
+
   @override
   State<HomePage> createState() => _HomePageStatus();
 }
@@ -39,7 +40,7 @@ class _HomePageStatus extends State<HomePage> {
 
   late Future<void> _refreshFuture;
   bool init = false;
-  bool _isLogined = false;
+  late bool _isLoginedUser;
   bool _isLocationInfo = false;
   String _locationInfo = '';
 
@@ -84,10 +85,11 @@ class _HomePageStatus extends State<HomePage> {
 
   // 로그인 여부 체크 ***
   Future<void> _checkLoginStatus() async{
-    bool logined;
-    logined = false;
+    bool checkResult;
+    checkResult = false;
+
     setState(() {
-      _isLogined = logined;
+      _isLoginedUser = checkResult;
     });
   }
 
@@ -186,7 +188,7 @@ class _HomePageStatus extends State<HomePage> {
 
             // 간단 카테고리 검색 위젯
             Padding(
-              padding: EdgeInsets.only(left: 28.w, right: 28.w, top: 40.h, bottom: 42.h),
+              padding: EdgeInsets.only(left: 20.w, right: 20.w, top: 40.h, bottom: 42.h),
               child: CategoryView(categoryList: _categories),
             ),
 

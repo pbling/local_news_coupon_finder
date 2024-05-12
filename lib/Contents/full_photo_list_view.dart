@@ -11,71 +11,73 @@ class FullPhotoListView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: Size(360.w, 50.h),
-        child: AppBar(
-          toolbarHeight: 50.h,
-          leading: IconButton(
-            icon: Icon(
-              Icons.arrow_back_ios_new_outlined,
-              size: min(16.h, 16.sp),
-            ),
-            onPressed: () {
-              Navigator.pop(context); // 이전 화면으로 돌아가기
-            },
-          ),
-          flexibleSpace: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Container(
-                color: Colors.white,
-                alignment: Alignment.centerLeft,
-                width: 360.w,
-                height: 49.h,
-                child: Row(
-                  children: [
-                    SizedBox(width: 50.w),
-                    Text(
-                      "전체 사진",
-                      style: TextStyle(
-                          fontWeight: FontWeight.w800,
-                          fontSize: min(16.h, 16.sp),
-                          fontFamily: "Pretendard"
-                      ),
-                      textAlign: TextAlign.left,
-                    ),
-                  ],
+    return SafeArea(
+        child: Scaffold(
+          appBar: PreferredSize(
+            preferredSize: Size(360.w, 50.h),
+            child: AppBar(
+              toolbarHeight: 50.h,
+              leading: IconButton(
+                icon: Icon(
+                  Icons.arrow_back_ios_new_outlined,
+                  size: min(16.h, 16.sp),
                 ),
+                onPressed: () {
+                  Navigator.pop(context); // 이전 화면으로 돌아가기
+                },
               ),
-              Container(
-                height: 1.h, // 회색 줄의 높이
-                color: Color(0xFFF5F5F5), // 회색 줄의 색상
+              flexibleSpace: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Container(
+                    color: Colors.white,
+                    alignment: Alignment.centerLeft,
+                    width: 360.w,
+                    height: 49.h,
+                    child: Row(
+                      children: [
+                        SizedBox(width: 50.w),
+                        Text(
+                          "전체 사진",
+                          style: TextStyle(
+                              fontWeight: FontWeight.w800,
+                              fontSize: min(16.h, 16.sp),
+                              fontFamily: "Pretendard"
+                          ),
+                          textAlign: TextAlign.left,
+                        ),
+                      ],
+                    ),
+                  ),
+                  Container(
+                    height: 1.h, // 회색 줄의 높이
+                    color: Color(0xFFF5F5F5), // 회색 줄의 색상
+                  ),
+                ],
               ),
-            ],
+            ),
+          ),
+          body: GridView.builder(
+            padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 20.h),
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 3,
+              childAspectRatio: 1.0,
+              crossAxisSpacing: 5.0.w,
+              mainAxisSpacing: 5.0.h,
+            ),
+            itemCount: imageUrls.length,
+            itemBuilder: (context, index) {
+              return GestureDetector(
+                onTap: () {
+                  Navigator.push(context, MaterialPageRoute(
+                    builder: (context) => _openPhotoView(context, imageUrls[index]),
+                  ));
+                },
+                child: Image.network(imageUrls[index], fit: BoxFit.cover),
+              );
+            },
           ),
         ),
-      ),
-      body: GridView.builder(
-        padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 20.h),
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 3,
-          childAspectRatio: 1.0,
-          crossAxisSpacing: 5.0.w,
-          mainAxisSpacing: 5.0.h,
-        ),
-        itemCount: imageUrls.length,
-        itemBuilder: (context, index) {
-          return GestureDetector(
-            onTap: () {
-              Navigator.push(context, MaterialPageRoute(
-                builder: (context) => _openPhotoView(context, imageUrls[index]),
-              ));
-            },
-            child: Image.network(imageUrls[index], fit: BoxFit.cover),
-          );
-        },
-      ),
     );
   }
 

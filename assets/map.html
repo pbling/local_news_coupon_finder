@@ -1,0 +1,37 @@
+<script type="text/javascript"
+        src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=hnlakuva17"></script>
+<div id="map"
+     style="width:100%;height:500px;"></div>
+<script>
+    function showMapWithStores() {
+        print('js call');
+
+        var mapOptions = {
+            center: new naver.maps.LatLng(35.855746, 128.489024),
+            zoom: 16
+        };
+
+        var map = new naver.maps.Map('map', mapOptions);
+
+        storeLocations.forEach(function(store) {
+            var marker = new naver.maps.Marker({
+                map: map,
+                position: new naver.maps.LatLng(35.855746, 128.489024),
+            });
+
+            var contentString = [
+                '<div class="iw_inner" style="padding: 0px 20px 0px 20px">',
+                '   <h3>' + 'store' + '</h3>',
+                '   </p>',
+                '</div>'
+            ].join('');
+
+            var infowindow = new naver.maps.InfoWindow({
+                content: contentString,
+                openByMarker: true
+            });
+
+            infowindow.open(map, marker);
+        });
+    }
+</script>

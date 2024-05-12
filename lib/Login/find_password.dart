@@ -47,7 +47,7 @@ class _findPasswordState extends State<FindPassword>{
                     children: [
                       SizedBox(width: 50.w),
                       Text(
-                        "비밀번호 찾기",
+                        "비밀번호 변경",
                         style: TextStyle(
                             fontWeight: FontWeight.w800,
                             fontSize: min(16.h, 16.sp),

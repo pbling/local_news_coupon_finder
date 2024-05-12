@@ -84,14 +84,14 @@ class _storyPageStatus extends State<StoryPage> {
         children: [
           Container(
             width: 360.w,
-            height: 110.h,
-            padding: EdgeInsets.only(left: 20.w, right: 20.w, top:25.h, bottom: 10.h),
+            height: 100.h,
+            padding: EdgeInsets.only(left: 20.w, right: 20.w, top:20.h, bottom: 10.h),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Container(
                   width: 140.w,
-                  height: 80.h,
+                  height: 70.h,
                   child: GestureDetector(
                     onTap: () {
                       // Handle tap on the first story
@@ -104,8 +104,8 @@ class _storyPageStatus extends State<StoryPage> {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           Container(
-                            width: min(50.w, 50.h),
-                            height: min(50.w, 50.h),
+                            width: min(45.w, 45.h),
+                            height: min(45.w, 45.h),
                             decoration: BoxDecoration(
                               shape: BoxShape.rectangle,
                               image: DecorationImage(
@@ -121,7 +121,8 @@ class _storyPageStatus extends State<StoryPage> {
                             textAlign: TextAlign.center,
                             style: TextStyle(
                               fontSize: min(12.sp, 12.h),
-                              fontWeight: FontWeight.bold,
+                              fontWeight: FontWeight.w500,
+                              fontFamily: "Pretendard",
                             ),
                             maxLines: 1,
                           ),
@@ -147,8 +148,8 @@ class _storyPageStatus extends State<StoryPage> {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           Container(
-                            width: min(50.w, 50.h),
-                            height: min(50.w, 50.h),
+                            width: min(45.w, 45.h),
+                            height: min(45.w, 45.h),
                             decoration: BoxDecoration(
                               shape: BoxShape.rectangle,
                               image: DecorationImage(
@@ -164,7 +165,8 @@ class _storyPageStatus extends State<StoryPage> {
                             textAlign: TextAlign.center,
                             style: TextStyle(
                               fontSize: min(12.sp, 12.h),
-                              fontWeight: FontWeight.bold,
+                              fontWeight: FontWeight.w500,
+                              fontFamily: "Pretendard",
                             ),
                             maxLines: 1,
                           ),
@@ -227,63 +229,71 @@ class _storyPageStatus extends State<StoryPage> {
         );
       },
       child: Container(
-        width: 200.w, // 적절한 크기 지정
+        width: 240.w,
         height: 250.h,
-        margin: EdgeInsets.all(20), // 각 항목의 마진
+        margin: EdgeInsets.only(left: 15.w, right: 15.w, top: 5.h, bottom: 15.h),
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10), // 테두리 곡선
+          borderRadius: BorderRadius.circular(10),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.3), // 그림자 색상 및 투명도
+              color: Colors.grey.withOpacity(0.5),
               spreadRadius: 2,
-              blurRadius: 8,
-              offset: Offset(0, 3), // 그림자 위치 조정
+              blurRadius: 3,
+              offset: Offset(0, 3),
             ),
           ],
           image: DecorationImage(
-            image: NetworkImage("https://res.heraldm.com/content/image/2023/02/24/20230224000260_0.jpg"), // 이미지 URL
-            fit: BoxFit.cover, // 이미지 채우기 방식
+            image: NetworkImage("https://cdn.pixabay.com/photo/2017/01/03/06/24/restaurant-1948732_1280.jpg"),
+            fit: BoxFit.cover,
           ),
         ),
         child: Stack(
           children: [
             Positioned(
-              bottom: 60,
+              top: 10,
               left: 10,
               child: Container(
                 padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                decoration: BoxDecoration(
-                  color: Colors.black.withOpacity(0.5), // 텍스트 배경색 투명도
-                  borderRadius: BorderRadius.circular(4), // 텍스트 배경 곡선
-                ),
                 child: Text(
-                  "조조칼국수",
+                  "성북구 맛집 \nTop 10 총정리",
                   style: TextStyle(
-                    fontSize: min(14.sp, 14.h),
+                    fontSize: min(22.sp, 22.h),
                     color: Colors.white, // 텍스트 색상
                     fontWeight: FontWeight.w800,
                     fontFamily: "Pretendard",
+                    shadows: [
+                      Shadow(
+                        offset: Offset(2.0, 2.0), // X, Y offset
+                        color: Colors.black.withOpacity(0.8), // Shadow color
+                        blurRadius: 3.0, // How much to blur the shadow
+                      ),
+                    ],
+                    height: 1.2, // Line height
                   ),
                 ),
               ),
             ),
             Positioned(
-              bottom: 10,
+              top : 82,
               left: 10,
               child: Container(
                 padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                decoration: BoxDecoration(
-                  color: Colors.black.withOpacity(0.5), // 텍스트 배경색 투명도
-                  borderRadius: BorderRadius.circular(4), // 텍스트 배경 곡선
-                ),
                 child: Text(
                   //"${story.title} - ${story.storeName}",
-                  "30년 전통을 이어온 비결",
+                  "성북구 주민들이 추천하는 \n매일 가고 싶은 곳",
                   style: TextStyle(
-                    fontSize: min(20.sp, 20.h),
+                    fontSize: min(16.sp, 16.h),
                     color: Colors.white, // 텍스트 색상
-                    fontWeight: FontWeight.w800,
+                    fontWeight: FontWeight.w500,
                     fontFamily: "Pretendard",
+                    shadows: [
+                      Shadow(
+                        offset: Offset(2.0, 2.0), // X, Y offset
+                        color: Colors.black.withOpacity(0.8), // Shadow color
+                        blurRadius: 3.0, // How much to blur the shadow
+                      ),
+                    ],
+                    height: 1.2,
                   ),
                 ),
               ),

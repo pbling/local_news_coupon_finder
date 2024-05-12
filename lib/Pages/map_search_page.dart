@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_naver_map/flutter_naver_map.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:local_news_coupon_finder/Contents/location_search_bar.dart';
 import 'package:local_news_coupon_finder/Contents/map_view.dart';
@@ -57,14 +58,19 @@ class _mapSearchPageState extends State<MapSearchPage> {
   }
 
   Future<void> _onRefresh() async {
-    await getStoreList();
-    getCategoryList();
-    await _checkLoginStatus();
-    await _checkIsLocationInfo();
+    List<Future<void>> futures = [];
 
-    _selectedTab = 0;
-    _searchedStoreList.addAll(_allStoreList);
-    setState(() {});
+    futures.add(getStoreList());
+    futures.add(getCategoryList());
+    futures.add(_checkLoginStatus());
+    futures.add(_checkIsLocationInfo());
+
+    await Future.wait(futures);
+
+    setState(() {
+      _selectedTab = 0;
+      getFilteredStoreList(_selectedTab);
+    });
   }
 
   Future<void> getStoreList() async {
@@ -118,7 +124,9 @@ class _mapSearchPageState extends State<MapSearchPage> {
     });
   }
 
-  void getCategoryList() async {
+  Future<void> getCategoryList() async {
+
+    print('getCategoryList');
 
     List<String> categoryNames = [];
     List<String> categoryIcons = [];
@@ -147,6 +155,9 @@ class _mapSearchPageState extends State<MapSearchPage> {
       _categoryNameList = categoryNames;
       _categoryIconList = categoryIcons;
     });
+
+
+    print(_categoryNameList);
   }
 
 
@@ -191,7 +202,6 @@ class _mapSearchPageState extends State<MapSearchPage> {
       },
     );
   }
-
 
   @override
   Widget _buildMapSearchPageWidget() {

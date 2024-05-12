@@ -3,15 +3,17 @@ import 'dart:math';
 import 'package:card_swiper/card_swiper.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:auto_size_text/auto_size_text.dart';
+import 'package:flutter_naver_map/flutter_naver_map.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:local_news_coupon_finder/Contents/store_detail_info_view.dart';
+import 'package:url_launcher/url_launcher.dart';
 
+import 'package:local_news_coupon_finder/Contents/store_detail_info_view.dart';
 import '../Contents/coupon_slide_view.dart';
 import '../Contents/news_list_view.dart';
 import '../Datas/coupon_service_.dart';
 import '../Datas/models.dart';
 import '../Datas/news_service_.dart';
+import '../Login/select_login_option_navi.dart';
 
 
 class StoreDetailPage extends StatefulWidget {
@@ -27,6 +29,7 @@ class _storeDetailPageState extends State<StoreDetailPage> with SingleTickerProv
   late Future<List<News>> _newsFuture;
   late Future<List<Coupon>> _couponFuture;
   late int _selectedTabbar = 0;
+  late bool _isLoginedUser;
 
   @override
   void initState() {
@@ -34,6 +37,9 @@ class _storeDetailPageState extends State<StoreDetailPage> with SingleTickerProv
     _tabController = TabController(length: 2, vsync: this);
     _newsFuture = _fetchNews();
     _couponFuture = _fetchCoupons();
+    _checkLoginStatus();
+
+
   }
 
   @override
@@ -51,17 +57,121 @@ class _storeDetailPageState extends State<StoreDetailPage> with SingleTickerProv
     return await CouponNewService().getCurrentCouponList();
   }
 
+  Future<void> _launchURL(String url) async {
+    final Uri uri = Uri.parse(url);
+    if (await canLaunchUrl(uri)) {
+      await launchUrl(uri, mode: LaunchMode.externalApplication);
+    } else {
+      throw 'Could not launch $url';
+    }
+  }
+  Future<void> _makePhoneCall(String phoneNumber) async {
+    final Uri telUri = Uri(scheme: 'tel', path: phoneNumber);
+    if (await canLaunchUrl(telUri)) {
+      await launchUrl(telUri);
+    } else {
+      throw 'Could not launch $phoneNumber';
+    }
+  }
+
+  // 로그인 여부 체크 ***
+  Future<void> _checkLoginStatus() async{
+
+
+    bool checkResult;
+    checkResult = false;
+
+    setState(() {
+      _isLoginedUser = checkResult;
+    });
+  }
+
+  // 로그인 다이얼로그
+  Future<void> _showLoginDialog() async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(15.0),
+          ),
+          backgroundColor: Colors.white,
+          title: Text(
+            '로그인이 필요합니다.',
+            style: TextStyle(
+                fontWeight: FontWeight.w800,
+                fontSize: min(14.h, 14.sp),
+                fontFamily: "Pretendard"
+            ),
+          ),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                Text(
+                  '저장 기능 사용을 위해서는 \n로그인이 필요합니다.',
+                  style: TextStyle(
+                      fontWeight: FontWeight.w500,
+                      fontSize: min(14.h, 14.sp),
+                      fontFamily: "Pretendard"
+                  ),
+                ),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: Text(
+                '취소',
+                style: TextStyle(
+                    fontWeight: FontWeight.w500,
+                    fontSize: min(14.h, 14.sp),
+                    fontFamily: "Pretendard"
+                ),
+              ),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            TextButton(
+              child: Text(
+                '로그인하러 가기',
+                style: TextStyle(
+                    fontWeight: FontWeight.w500,
+                    fontSize: min(14.h, 14.sp),
+                    fontFamily: "Pretendard"
+                ),
+              ),
+              onPressed: () async {
+                Navigator.of(context).pop();
+                // 위치정보 사용약관 페이지 이동
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => SelectLoginOptWithNavi(),
+                  ),
+                );
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+
+
   @override
   Widget build(BuildContext context) {
 
     final tabMenu = ['상점정보', '상점소식'];
 
-    return SafeArea(child: Scaffold(
+    return SafeArea(
+      child: Scaffold(
       appBar: PreferredSize(
         preferredSize: Size(360.w, 50.h),
         child: AppBar(
           toolbarHeight: 50.h,
-          backgroundColor: Colors.red,
           leading: IconButton(
             icon: Icon(
               Icons.arrow_back_ios_new_outlined,
@@ -140,7 +250,6 @@ class _storeDetailPageState extends State<StoreDetailPage> with SingleTickerProv
                   Container(
                     width:  360.w,
                     height: 220.h,
-                    color: Colors.yellow,
                     padding: EdgeInsets.only(left: 25.w, right: 25.w, top : 30.h,),
                     child: Column(
                       children: [
@@ -221,7 +330,7 @@ class _storeDetailPageState extends State<StoreDetailPage> with SingleTickerProv
                           width: 300.w,
                           height: 70.h,
                           child: Text(
-                            '진심을 다해 선보이는 스시 오마카세 \n 콜키지는 에약 시 요청사항에 적어주시면 감사하겠습니다.',
+                            '진심을 다해 선보이는 스시 오마카세 \n 콜키지는 요청사항에 적어주시면 감사하겠습니다.',
                             style: TextStyle(
                                 fontFamily: "Pretendard",
                                 fontSize: min(14.sp, 14.h),
@@ -237,7 +346,7 @@ class _storeDetailPageState extends State<StoreDetailPage> with SingleTickerProv
                         SizedBox(height: 15.h),
                         // 좋아요, 홈페이지, 연락
                         Container(
-                          padding: EdgeInsets.only(left: 10.w, right: 10.w),
+                          padding: EdgeInsets.only(left: 15.w, right: 15.w),
                           width: 310.w,
                           height: 35.h,
                           child: Row(
@@ -247,6 +356,7 @@ class _storeDetailPageState extends State<StoreDetailPage> with SingleTickerProv
                               GestureDetector(
                                 onTap: () {
                                   print('좋아요 저장');
+                                  _isLoginedUser? '' : _showLoginDialog();
                                 },
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
@@ -254,7 +364,7 @@ class _storeDetailPageState extends State<StoreDetailPage> with SingleTickerProv
                                     Icon(
                                       Icons.favorite,
                                       size: min(20.sp, 20.h),
-                                      color: Color(0xFF999999),
+                                      color: Colors.black54,
                                     ),
                                     SizedBox(width: 3.w),
                                     Text(
@@ -263,7 +373,7 @@ class _storeDetailPageState extends State<StoreDetailPage> with SingleTickerProv
                                           fontFamily: "Pretendard",
                                           fontSize: min(14.sp, 14.h),
                                           fontWeight: FontWeight.w500,
-                                          color: Color(0xFF999999)
+                                          color: Colors.black54
                                       ),
                                       textAlign: TextAlign.left,
                                       maxLines: 1,
@@ -272,13 +382,14 @@ class _storeDetailPageState extends State<StoreDetailPage> with SingleTickerProv
                                 ),
                               ),
                               Container(
-                                width: 0.5,
-                                height: 35.h,
+                                width: 1,
+                                height: 25.h,
                                 color: Color(0xFF999999),
                               ),
                               GestureDetector(
                                 onTap: () {
                                   print('홈페이지');
+                                  _launchURL('http://www.naver.com');
                                 },
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
@@ -286,7 +397,7 @@ class _storeDetailPageState extends State<StoreDetailPage> with SingleTickerProv
                                     Icon(
                                       Icons.home_outlined,
                                       size: min(20.sp, 20.h),
-                                      color: Color(0xFF999999),
+                                      color: Colors.black54,
                                     ),
                                     SizedBox(width: 3.w),
                                     Text(
@@ -295,7 +406,7 @@ class _storeDetailPageState extends State<StoreDetailPage> with SingleTickerProv
                                           fontFamily: "Pretendard",
                                           fontSize: min(14.sp, 14.h),
                                           fontWeight: FontWeight.w500,
-                                          color: Color(0xFF999999)
+                                          color: Colors.black54
                                       ),
                                       textAlign: TextAlign.left,
                                       maxLines: 1,
@@ -304,13 +415,14 @@ class _storeDetailPageState extends State<StoreDetailPage> with SingleTickerProv
                                 ),
                               ),
                               Container(
-                                width: 0.5,
-                                height: 48.h,
+                                width: 1,
+                                height: 25.h,
                                 color: Color(0xFF999999),
                               ),
                               GestureDetector(
                                 onTap: () {
                                   print('전화연결');
+                                  _makePhoneCall("029999999");
                                 },
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
@@ -318,7 +430,7 @@ class _storeDetailPageState extends State<StoreDetailPage> with SingleTickerProv
                                     Icon(
                                       Icons.call,
                                       size: min(20.sp, 20.h),
-                                      color: Color(0xFF999999),
+                                      color: Colors.black54,
                                     ),
                                     SizedBox(width: 3.w),
                                     Text(
@@ -327,7 +439,7 @@ class _storeDetailPageState extends State<StoreDetailPage> with SingleTickerProv
                                           fontFamily: "Pretendard",
                                           fontSize: min(14.sp, 14.h),
                                           fontWeight: FontWeight.w500,
-                                          color: Color(0xFF999999)
+                                          color: Colors.black54
                                       ),
                                       textAlign: TextAlign.left,
                                       maxLines: 1,

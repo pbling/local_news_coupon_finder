@@ -30,7 +30,7 @@ class _simpleNewsListViewState extends State<SimpleNewsListView> {
 
     return Container(
       width: 360.w,
-      height: 138.h * (widget.newsList.length >= 5 ? 5 : widget.newsList.length) ,
+      height: 140.h * (widget.newsList.length >= 5 ? 5 : widget.newsList.length) ,
       child: ListView.builder(
         shrinkWrap: true,
         physics: NeverScrollableScrollPhysics(),

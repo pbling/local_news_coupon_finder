@@ -45,6 +45,8 @@ class _locationSearchBarState extends State<LocationSearchBar> {
   static const platform = MethodChannel('location_channel');
 
 
+
+
   // 약관동의 다이얼로그
   Future<void> _showTermsAgreementDialog() async {
     return showDialog<void>(
@@ -60,7 +62,7 @@ class _locationSearchBarState extends State<LocationSearchBar> {
             '위치 정보를 사용할 수 없습니다.',
             style: TextStyle(
               fontWeight: FontWeight.w800,
-              fontSize: min(16.h, 16.sp),
+              fontSize: min(14.h, 14.sp),
               fontFamily: "Pretendard"
             ),
           ),
@@ -68,10 +70,10 @@ class _locationSearchBarState extends State<LocationSearchBar> {
             child: ListBody(
               children: <Widget>[
                 Text(
-                  '서비스 이용을 위해서는 동네곳곳의 위치정보 사용약관 동의가 필요합니다.',
+                  '위치정보 이용을 위해서는 \n서비스약관 동의가 필요합니다.',
                   style: TextStyle(
                       fontWeight: FontWeight.w500,
-                      fontSize: min(16.h, 16.sp),
+                      fontSize: min(14.h, 14.sp),
                       fontFamily: "Pretendard"
                   ),
                 ),
@@ -79,26 +81,6 @@ class _locationSearchBarState extends State<LocationSearchBar> {
             ),
           ),
           actions: <Widget>[
-            TextButton(
-              child: Text(
-                '동의하러 가기',
-                style: TextStyle(
-                  fontWeight: FontWeight.w500,
-                  fontSize: min(14.h, 14.sp),
-                  fontFamily: "Pretendard"
-                ),
-              ),
-              onPressed: () async {
-                Navigator.of(context).pop();
-                // 위치정보 사용약관 페이지 이동
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => TermsPage(),
-                  ),
-                );
-              },
-            ),
             TextButton(
               child: Text(
                 '취소',
@@ -110,6 +92,26 @@ class _locationSearchBarState extends State<LocationSearchBar> {
               ),
               onPressed: () {
                 Navigator.of(context).pop();
+              },
+            ),
+            TextButton(
+              child: Text(
+                '동의하러 가기',
+                style: TextStyle(
+                    fontWeight: FontWeight.w500,
+                    fontSize: min(14.h, 14.sp),
+                    fontFamily: "Pretendard"
+                ),
+              ),
+              onPressed: () async {
+                Navigator.of(context).pop();
+                // 위치정보 사용약관 페이지 이동
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => TermsPage(),
+                  ),
+                );
               },
             ),
           ],
@@ -130,6 +132,8 @@ class _locationSearchBarState extends State<LocationSearchBar> {
 
   // 약관동의 여부 체크 ***
   Future<void> _checkAgreementStatus() async {
+
+    print('_checkAgreementStatus');
     bool checkResult;
     checkResult = true;
 

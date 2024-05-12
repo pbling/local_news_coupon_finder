@@ -28,7 +28,7 @@ class _categoryViewwState extends State<CategoryView> {
       primary: false,
       crossAxisCount: 5,
       childAspectRatio: 1.0,
-      mainAxisSpacing: 15.h,
+      mainAxisSpacing: 10.h,
 
       children: List.generate(widget.categoryList.length, (index) {
         Category category = widget.categoryList[index];

@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:auto_size_text/auto_size_text.dart';
@@ -5,6 +7,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:local_news_coupon_finder/Datas/coupon_service_.dart';
 import 'package:local_news_coupon_finder/Datas/store_service_.dart';
 import 'package:local_news_coupon_finder/Login/select_login_option.dart';
+import 'package:local_news_coupon_finder/Pages/member_info_modify_page.dart';
 import 'package:local_news_coupon_finder/Pages/pick_stores_page.dart';
 import 'package:local_news_coupon_finder/Pages/saved_coupons_page.dart';
 
@@ -50,7 +53,7 @@ class _myPageStatus extends State<MyPage> {
 
   Future<void> _checkLoginStatus() async{
     bool checkResult;
-    checkResult = false;
+    checkResult = true;
 
     setState(() {
       _isLoginedUser = checkResult;
@@ -118,7 +121,7 @@ class _myPageStatus extends State<MyPage> {
                         Text(
                           'UserID',
                           style: TextStyle(
-                            fontSize: 20.sp,
+                            fontSize: min(20.sp, 20.h),
                             fontWeight: FontWeight.w800,
                             fontFamily: "Pretendard",
                           ),
@@ -129,7 +132,7 @@ class _myPageStatus extends State<MyPage> {
                         Text(
                           '동네곳곳 주민입니다.',
                           style: TextStyle(
-                            fontSize: 16.sp,
+                            fontSize: min(16.sp, 16.h),
                             fontWeight: FontWeight.w500,
                             fontFamily: "Pretendard",
                           ),
@@ -166,7 +169,7 @@ class _myPageStatus extends State<MyPage> {
                     '나의활동',
                     style: TextStyle(
                         fontFamily: "Pretendard",
-                        fontSize: 16.sp,
+                        fontSize: min(16.sp, 16.h),
                         fontWeight: FontWeight.w800,
                         color: Colors.black
                     ),
@@ -202,7 +205,7 @@ class _myPageStatus extends State<MyPage> {
                         Icon(
                           Icons.discount_outlined,
                           color: Colors.black,
-                          size : 20.sp,
+                          size : min(20.sp, 20.h),
                         ), // 아이콘
 
                         SizedBox(width: 10.w),
@@ -213,7 +216,7 @@ class _myPageStatus extends State<MyPage> {
                             '저장한 동네 쿠폰',
                             style: TextStyle(
                                 fontFamily: "Pretendard",
-                                fontSize: 16.sp,
+                                fontSize: min(16.sp, 16.h),
                                 fontWeight: FontWeight.w500,
                                 color: Colors.black
                             ),
@@ -225,7 +228,7 @@ class _myPageStatus extends State<MyPage> {
                         Icon(
                           Icons.arrow_forward_ios_rounded,
                           color: Colors.black,
-                          size : 20.sp,
+                          size : min(20.sp, 20.h),
                         ),
                       ],
                     ),
@@ -263,7 +266,7 @@ class _myPageStatus extends State<MyPage> {
                         Icon(
                             Icons.favorite_border,
                             color: Colors.black,
-                            size : 20.sp
+                            size : min(20.sp, 20.h),
                         ),
 
                         SizedBox(width: 10.w),
@@ -274,7 +277,7 @@ class _myPageStatus extends State<MyPage> {
                             '나의 Pick 상점',
                             style: TextStyle(
                                 fontFamily: "Pretendard",
-                                fontSize: 16.sp,
+                                fontSize: min(16.sp, 16.h),
                                 fontWeight: FontWeight.w500,
                                 color: Colors.black
                             ),
@@ -286,7 +289,68 @@ class _myPageStatus extends State<MyPage> {
                         Icon(
                           Icons.arrow_forward_ios_rounded,
                           color: Colors.black,
-                          size : 20.sp,
+                          size : min(20.sp, 20.h),
+                        ),// 텍스트
+                      ],
+                    ),
+                  ),
+
+                  Divider(
+                    color: Color(0xFFF5F5F5),
+                    thickness: 1.0,
+                  ),
+
+                  ElevatedButton(
+                    onPressed: () {
+                      print(' 회원정보 변경 ');
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => MemberInfoModifyPage(),
+                        ),
+                      );
+
+                    },
+                    style: ElevatedButton.styleFrom(
+                      minimumSize: Size(360.w, 55.h),
+                      backgroundColor: Colors.transparent,
+                      shadowColor: Colors.transparent,
+                      foregroundColor : Colors.transparent,
+                      elevation: 0,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.zero,
+                      ),
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Icon(
+                            Icons.change_circle_outlined,
+                            color: Colors.black,
+                            size : min(20.sp, 20.h),
+                        ),
+
+                        SizedBox(width: 10.w),
+                        Container(
+                          width: 140.w,
+                          height: 20.h,
+                          child: Text(
+                            '회원정보 변경',
+                            style: TextStyle(
+                                fontFamily: "Pretendard",
+                                fontSize: min(16.sp, 16.h),
+                                fontWeight: FontWeight.w500,
+                                color: Colors.black
+                            ),
+                            textAlign: TextAlign.left,
+                          ),
+                        ),
+
+                        SizedBox(width: 80.w),
+                        Icon(
+                          Icons.arrow_forward_ios_rounded,
+                          color: Colors.black,
+                          size : min(20.sp, 20.h),
                         ),// 텍스트
                       ],
                     ),

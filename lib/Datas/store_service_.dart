@@ -12,6 +12,7 @@ class StoreNewService {
   Future<List<Store>> getAllStores() async {
     return [
       Store(
+        isPicked: false,
         storeId: 'store1',
         storeImage: '음식점',
         category: '레스토랑',
@@ -47,6 +48,7 @@ class StoreNewService {
         createdDate: DateTime.now(),
       ),
       Store(
+        isPicked: false,
         storeId: 'store2',
         storeImage: '카페',
         category: '카페',
@@ -82,6 +84,7 @@ class StoreNewService {
         createdDate: DateTime.now(),
       ),
       Store(
+        isPicked: false,
         storeId: 'store3',
         storeImage: '미용실',
         category: '뷰티',
@@ -117,6 +120,7 @@ class StoreNewService {
         createdDate: DateTime.now(),
       ),
       Store(
+        isPicked: false,
         storeId: 'store4',
         storeImage: '종합학원',
         category: '아이교육',
@@ -152,6 +156,7 @@ class StoreNewService {
         createdDate: DateTime.now(),
       ),
       Store(
+        isPicked: false,
         storeId: 'store5',
         storeImage: '미술학원',
         category: '아이교육',
@@ -187,6 +192,7 @@ class StoreNewService {
         createdDate: DateTime.parse("2024-01-01"),
       ),
       Store(
+        isPicked: false,
         storeId: 'store6',
         storeImage: '피부과',
         category: '병원/약국',
@@ -209,6 +215,7 @@ class StoreNewService {
         createdDate: DateTime.parse("2024-03-10"),
       ),
       Store(
+        isPicked: false,
         storeId: 'store7',
         storeImage: '내과',
         category: '병원/약국',
@@ -235,6 +242,7 @@ class StoreNewService {
         createdDate: DateTime.parse("2024-02-10"),
       ),
       Store(
+        isPicked: false,
         storeId: 'store8',
         storeImage: '부동산',
         category: '서비스',
@@ -261,6 +269,7 @@ class StoreNewService {
         createdDate: DateTime.parse("2024-01-09"),
       ),
       Store(
+        isPicked: false,
         storeId: 'store9',
         storeImage: '피트니스',
         category: '운동',
@@ -293,6 +302,7 @@ class StoreNewService {
         createdDate: DateTime.parse("2024-01-10"),
       ),
       Store(
+        isPicked: false,
         storeId: 'store10',
         storeImage: '피부관리샵',
         category: '뷰티',

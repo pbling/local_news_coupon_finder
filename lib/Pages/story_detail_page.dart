@@ -23,6 +23,7 @@ class _storyDetailPageState extends State<StoryDetailPage> {
   @override
   void initState() {
     super.initState();
+
   }
 
   String generatePageURL() {

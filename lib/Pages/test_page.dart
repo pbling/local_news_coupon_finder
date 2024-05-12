@@ -1,7 +1,8 @@
 import 'dart:math';
-
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:local_news_coupon_finder/Contents/coupon_slide_view.dart';
 import 'package:local_news_coupon_finder/Pages/coupon_news_page.dart';
 import 'package:local_news_coupon_finder/Pages/map_search_page.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -19,13 +20,19 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   int _selectedIndex = 0;
 
-  static List<Widget> _widgetOptions = <Widget>[
-    HomePage(),
-    MapSearchPage(),
-    CouponNewsPage(),
-    StoryPage(),
-    MyPage(),
-  ];
+  late List<Widget> _widgetOptions;
+
+  @override
+  void initState() {
+    super.initState();
+    _widgetOptions = <Widget>[
+      HomePage(),
+      MapSearchPage(),
+      CouponNewsPage(),
+      StoryPage(),
+      MyPage(),
+    ];
+  }
 
   List<AppBar> _appBars = [
     AppBar(
@@ -66,6 +73,7 @@ class _MyHomePageState extends State<MyHomePage> {
         height: 50.h,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SizedBox(width: 21.w),
             Container(
@@ -102,6 +110,7 @@ class _MyHomePageState extends State<MyHomePage> {
         height: 50.h,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SizedBox(width: 21.w),
             Container(
@@ -133,8 +142,54 @@ class _MyHomePageState extends State<MyHomePage> {
 
   void _onItemTapped(int index) {
     setState(() {
-      _selectedIndex = index;
+      //웹인 경우에는 지도검색 미노출
+      if (kIsWeb && index == 1) { 
+        _showWebNotSupportedDialog(); 
+      } else {
+        _selectedIndex = index;
+      }
     });
+  }
+
+  void _showWebNotSupportedDialog() {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(
+            "이 기능은 웹에서 지원되지 않습니다.",
+            style : TextStyle(
+              fontSize: min(14.h, 14.sp),
+              fontWeight: FontWeight.w800,
+              fontFamily: "Pretendard",
+            ),
+          ),
+          content: Text(
+            "이 기능을 사용하려면 \n앱을 설치하시기 바랍니다.",
+            style : TextStyle(
+              fontSize: min(14.h, 14.sp),
+              fontWeight: FontWeight.w500,
+              fontFamily: "Pretendard",
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text(
+                "확인",
+                style : TextStyle(
+                  fontSize: min(14.h, 14.sp),
+                  fontWeight: FontWeight.w500,
+                  fontFamily: "Pretendard",
+                ),),
+            ),
+          ],
+        );
+      },
+    );
   }
 
   void _handleLocationChange(String newLocation) {

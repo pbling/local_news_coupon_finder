@@ -63,21 +63,20 @@ class _storeDetailInfoViewState extends State<StoreDetailInfoView> {
 
   void calculateContainerHeight(){
     double height = 0;
-
     if(isScheduleList){
-      height = height + (25 * scheduleList.length) + 290;
+      height = height + ((25*scheduleList.length) + 340).h;
     } else {
-      height = height + 260;
+      height = height + 310.h;
     }
     if(isMenuList){
-      height = height + (25 * menuList.length) + 70;
-      height = height + 15;
+      height = height + ((25 * menuList.length) + 70).h;
+      height = height + 15.h;
     }
     if(isStorePhoto){
       height = height + max(220.h, 220.w) + 100.h;
-      height = height + 15;
+      height = height + 15.h;
     }
-    totalHeight = height + 70.h;
+    totalHeight = height;
     print(totalHeight);
   }
 
@@ -85,24 +84,24 @@ class _storeDetailInfoViewState extends State<StoreDetailInfoView> {
   Widget build(BuildContext context) {
 
     var cameraPosition = NCameraPosition(
-      target: NLatLng(37.506932467450326, 127.05578661133796),
-      zoom: 15,
-      bearing: 45,
-      tilt: 30,
+      target: NLatLng(widget.store.addressPos.latitude, widget.store.addressPos.longitude),
+      zoom: 13,
+      bearing: 0,
+      tilt: 0,
     );
 
     calculateContainerHeight();
 
     return Container(
       width : 360.w,
-      height: totalHeight.h,
+      height: totalHeight,
 
       child: Column(
         children: [
           Container(
             padding: EdgeInsets.only(left: 20.w, right: 20.w, top: 20.h, bottom: 20.h),
             width: 360.w,
-            height: isScheduleList? ((25*scheduleList.length) + 290).h : 260.h,
+            height: isScheduleList? ((25*scheduleList.length) + 340).h : 310.h,
             child: Column(
               children: [
 
@@ -204,20 +203,31 @@ class _storeDetailInfoViewState extends State<StoreDetailInfoView> {
 
                       SizedBox(height: 15.h),
                       Container(
-                        width: 350.w,
-                        height: 150.h,
+                        width : double.infinity,
+                        height: 200.h,
                         color: Colors.amber,
-                        /*
-                  child: NaverMap(
-                    options: NaverMapViewOptions(
-                      initialCameraPosition: cameraPosition,
-                      minZoom: 10, // default is 0
-                      maxZoom: 16, // default is 21
-                      maxTilt: 30, // default is 63
-                    ),
-                    onMapReady: (controller) {},
-                  ),
-                   */
+
+                        child: NaverMap(
+                          options: NaverMapViewOptions(
+                            initialCameraPosition: cameraPosition,
+                            minZoom: 1, // default is 0
+                            maxZoom: 20, // default is 21
+                            maxTilt: 0, // default is 63
+                          ),
+                          onMapReady: (controller) {
+                            NMarker marker = NMarker(
+                              id: widget.store.storeId.toString(),
+                              // assuming store id is unique
+                              position: NLatLng(
+                                  widget.store.addressPos.latitude,
+                                  widget.store.addressPos.longitude),
+                              icon: NOverlayImage.fromAssetImage('assets/images/icon/place.png'),
+                              size: Size(20.w, 25.h),
+                            );
+                            controller.addOverlay(marker);
+                          },
+                        ),
+
                       ),
                     ],
                   ),
@@ -241,7 +251,6 @@ class _storeDetailInfoViewState extends State<StoreDetailInfoView> {
             padding: EdgeInsets.only(left: 20.w, right: 20.w, top: 20.h, bottom: 20.h),
             width: 360.w,
             height: isMenuList? ((25 * menuList.length) + 70).h : 0,
-            color: Colors.red,
             child: Column(
               children: [
                 Visibility(
@@ -312,7 +321,6 @@ class _storeDetailInfoViewState extends State<StoreDetailInfoView> {
               padding: EdgeInsets.only(left: 20.w, right: 20.w, top: 20.h, bottom: 20.h),
               width: 360.w,
               height: isStorePhoto? max(220.h, 220.w) + 100.h : 0,
-              color: Colors.blueGrey,
               child: Column(
                 children: [
                   Visibility(
@@ -339,7 +347,7 @@ class _storeDetailInfoViewState extends State<StoreDetailInfoView> {
                           ],
                         ),
 
-                        SizedBox(height : 10.h),
+                        SizedBox(height : 15.h),
 
                         PhotoListView(imageUrls: photoList),
                       ],
